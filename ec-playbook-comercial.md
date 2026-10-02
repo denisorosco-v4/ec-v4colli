@@ -1,3 +1,8 @@
+---
+name: ec-playbook-comercial
+description: Consolidar os outputs das skills 6 a 13 em um único documento — o Playbook Comercial completo. Este é o documento-mãe da operação comercial do cliente: descreve como a operação deve funcionar, quem faz o quê, com quais ferramentas, em qual ritmo, com quais scripts e dentro de quais acordos. Qualquer pessoa que leia este Playbook deve ser capaz de executar o processo comercial com qualidade e padrão.
+---
+
 # Skill: /ec-playbook-comercial
 **Objetivo:** Consolidar os outputs das skills 6 a 13 em um único documento — o Playbook Comercial completo. Este é o documento-mãe da operação comercial do cliente: descreve como a operação deve funcionar, quem faz o quê, com quais ferramentas, em qual ritmo, com quais scripts e dentro de quais acordos. Qualquer pessoa que leia este Playbook deve ser capaz de executar o processo comercial com qualidade e padrão.
 
@@ -21,6 +26,23 @@
 |---|---|
 | **Plano de ROI** | Dados para a capa, contexto do cliente e propósito do Playbook |
 | **Documento Geral de Análise** (`/ec-analise`) | Base para a seção de Apresentação — o problema que o Playbook resolve |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> O Playbook sintetiza os outputs das skills 6 a 13. Se algum desses outputs estiver incompleto ou ausente, a skill avalia o que tem e preenche os gaps com benchmark antes de montar o documento final.
+
+**Se outputs das skills anteriores estiverem incompletos — pergunte:**
+1. Quais dos entregáveis das skills 6 a 13 foram produzidos (mesmo que em modo benchmark)?
+2. Quais seções têm decisões estratégicas do gestor que ainda não foram capturadas?
+3. Há alguma restrição operacional ou cultural do cliente que deve orientar o documento?
+
+**Para capítulos sem output disponível, pesquise na internet:**
+- Melhores práticas de estruturação comercial para o segmento do cliente
+- O que operações bem-sucedidas do mesmo porte e setor têm em comum em cada capítulo do Playbook
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

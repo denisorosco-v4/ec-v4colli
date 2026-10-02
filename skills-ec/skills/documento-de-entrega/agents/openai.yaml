@@ -1,0 +1,6 @@
+interface:
+  display_name: "Documento de Entrega"
+  short_description: "Gera relatorios consultivos V4 em pagina branca"
+  default_prompt: "Use $documento-de-entrega para criar um relatorio consultivo executivo em pagina branca no padrao V4."
+policy:
+  allow_implicit_invocation: true

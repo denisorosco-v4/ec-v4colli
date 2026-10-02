@@ -1,3 +1,8 @@
+---
+name: ec-playbook
+description: Ativar e orquestrar o sistema completo de Estruturação Comercial (E.C) da V4 Company — 20 skills em sequência, do Kickoff à implementação do CRM. Esta é a skill de entrada do projeto: ela orienta o consultor sobre o que coletar, em que ordem executar cada skill e o que esperar de cada entregável.
+---
+
 # Skill: /ec-playbook
 **Objetivo:** Ativar e orquestrar o sistema completo de Estruturação Comercial (E.C) da V4 Company — 20 skills em sequência, do Kickoff à implementação do CRM. Esta é a skill de entrada do projeto: ela orienta o consultor sobre o que coletar, em que ordem executar cada skill e o que esperar de cada entregável.
 

@@ -1,3 +1,8 @@
+---
+name: ec-bpmn
+description: Mapear e documentar o processo comercial completo do cliente no formato BPMN — do primeiro contato ao onboarding do cliente. O documento define cada etapa, quem executa, a ação principal, o gatilho de automação e o critério de conclusão (DoD), além dos canais de entrada de leads.
+---
+
 # Skill: /ec-bpmn
 **Objetivo:** Mapear e documentar o processo comercial completo do cliente no formato BPMN — do primeiro contato ao onboarding do cliente. O documento define cada etapa, quem executa, a ação principal, o gatilho de automação e o critério de conclusão (DoD), além dos canais de entrada de leads.
 
@@ -26,6 +31,27 @@
 |---|---|
 | **Processo atual documentado** (fluxograma, anotações) | Ponto de partida — o que existe e o que precisa ser redesenhado |
 | **Exemplos de conversas reais com leads** | Valida o que o gestor descreveu — o que acontece de verdade |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill precisa entender como a venda acontece hoje antes de desenhar o novo processo. Se não houver entrevistas ou processo documentado, execute o protocolo abaixo.
+
+**Se não houver entrevistas ou processo atual documentado — pergunte:**
+1. Como uma venda acontece hoje, do início ao fim — mesmo que de forma informal?
+2. Quem recebe o lead primeiro?
+3. O que acontece nos primeiros minutos/horas após o lead chegar?
+4. Como o lead é qualificado? Existe algum critério, mesmo que informal?
+5. Como é apresentado o produto, serviço ou proposta?
+6. Como é feito o fechamento? Existe contrato formal?
+7. O que acontece depois que o cliente fecha? Quem cuida do onboarding?
+
+**Para o que não for respondido, pesquise na internet:**
+- BPMN e fluxo de processo padrão de mercado para o segmento e modelo de venda do cliente
+- Etapas mais comuns e melhores práticas de processo para o tipo de venda (consultiva, transacional, recorrente)
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

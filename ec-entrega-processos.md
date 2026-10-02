@@ -1,3 +1,8 @@
+---
+name: ec-entrega-processos
+description: Gerar o HTML completo da Apresentação de Entrega de Processos e Estratégia — o documento visual que será apresentado ao cliente na reunião de entrega do Playbook Comercial. O output é um arquivo HTML autocontido, com CSS inline, pronto para abrir no browser, converter em PDF ou hospedar no Claude Artifacts / claude.ai.
+---
+
 # Skill: /ec-entrega-processos
 **Objetivo:** Gerar o HTML completo da Apresentação de Entrega de Processos e Estratégia — o documento visual que será apresentado ao cliente na reunião de entrega do Playbook Comercial. O output é um arquivo HTML autocontido, com CSS inline, pronto para abrir no browser, converter em PDF ou hospedar no Claude Artifacts / claude.ai.
 
@@ -10,6 +15,23 @@
 | **Playbook Comercial** (output da `/ec-playbook-comercial`) | Conteúdo principal — todos os capítulos sintetizados na apresentação |
 | **Plano de ROI** | Nome do cliente, cidade, segmento, meta de receita — dados para a capa e contexto |
 | **Documento Geral de Análise** (`/ec-analise`) | Diagnóstico inicial — base para o slide "De onde viemos" |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill gera o HTML de entrega do Playbook. Se o Playbook não estiver completo ou tiver seções baseadas em benchmark, a apresentação deve refletir isso visualmente.
+
+**Se o Playbook Comercial estiver incompleto — pergunte:**
+1. Quais capítulos do Playbook foram produzidos?
+2. Quais seções foram construídas com base em benchmark e precisam de sinalização visual na apresentação?
+3. Os dados da capa estão confirmados? (nome do cliente, cidade, segmento)
+
+**Para seções sem conteúdo disponível, pesquise na internet:**
+- Estrutura de apresentação de entrega de Playbook mais eficaz para o segmento do cliente
+- Como comunicar premissas de benchmark de forma profissional em uma apresentação executiva
+
+> ⚠️ Seções baseadas em benchmark devem ter nota visual na apresentação: **"Premissa a validar com o cliente".**
 
 ---
 

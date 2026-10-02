@@ -1,3 +1,8 @@
+---
+name: ec-kpis
+description: Analisar os dados históricos e qualitativos da operação comercial do cliente para definir os KPIs oficiais do novo fluxo comercial e os rituais de gestão — com metas baseadas em evidências reais, não em benchmarks genéricos.
+---
+
 # Skill: /ec-kpis
 **Objetivo:** Analisar os dados históricos e qualitativos da operação comercial do cliente para definir os KPIs oficiais do novo fluxo comercial e os rituais de gestão — com metas baseadas em evidências reais, não em benchmarks genéricos.
 
@@ -42,6 +47,28 @@ Antes de propor qualquer KPI, o modelo deve verificar quais dos documentos abaix
 | **Transcrição da entrevista com o bottom performer** | Onde o desempenho cai — o que precisa de KPI de acompanhamento e apoio |
 | **Estrutura Organizacional e Pessoas** (output da `/ec-org-pessoas`) | Quem será responsável por qual KPI — sem dono, KPI não funciona |
 | **Política de comissionamento atual** (se existir) | Alinha metas com incentivo — KPI sem comissionamento alinhado não é seguido |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill verifica se os dados históricos e metas estão disponíveis. Sem eles, KPIs genéricos são inúteis. Execute o protocolo abaixo quando dados reais não estiverem disponíveis.
+
+**Se dados históricos e metas não estiverem disponíveis — pergunte:**
+1. Qual é a meta de faturamento para os próximos 12 meses?
+2. Qual é o ticket médio atual ou estimado?
+3. Quantos leads chegam por mês hoje — mesmo que estimativa?
+4. Qual é a taxa de conversão percebida? (Ex: de cada 10 leads, quantos fecham?)
+5. Qual é o ciclo médio de venda — do primeiro contato ao fechamento?
+6. Quais indicadores o gestor acompanha hoje, mesmo que informalmente?
+
+**Para o que não for respondido, pesquise na internet:**
+- Taxas de conversão MQL→SQL e SQL→Fechamento para o segmento
+- CPL médio por canal (mídia paga, indicação, outbound) no segmento
+- Ciclo médio de venda para o tipo de produto/serviço
+- Ticket médio e CAC médio de operações comparáveis no setor
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

@@ -1,5 +1,31 @@
+---
+name: ec-entrevista-top
+description: Analisar a transcrição do Kickoff e da entrevista com o gestor comercial para gerar perguntas estruturadas para a entrevista com o vendedor de maior performance (top performer), indicado pelo próprio gestor.
+---
+
 # Skill: /ec-entrevista-top
 **Objetivo:** Analisar a transcrição do Kickoff e da entrevista com o gestor comercial para gerar perguntas estruturadas para a entrevista com o vendedor de maior performance (top performer), indicado pelo próprio gestor.
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill avalia o que está disponível antes de gerar as perguntas. Se as transcrições anteriores não estiverem disponíveis, execute o protocolo abaixo.
+
+**Se Kickoff e entrevista do gestor não estiverem disponíveis — pergunte:**
+1. O que você faz diferente dos outros vendedores do time?
+2. Como você organiza sua rotina de prospecção e follow-up?
+3. Quais são suas técnicas principais para conduzir uma negociação até o fechamento?
+4. O que você faz quando um lead para de responder?
+5. Como você lida com as objeções mais comuns?
+6. O que mais te motiva a vender?
+7. O que você recomendaria para um vendedor que está começando?
+
+**Para o que não for respondido, pesquise na internet:**
+- Comportamentos e hábitos de top performers de vendas no segmento (State of Sales, SalesHacker, LinkedIn Sales Insights)
+- O que diferencia os melhores vendedores dos demais no tipo de venda identificado
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

@@ -1,3 +1,8 @@
+---
+name: ec-dre
+description: Construir o Modelo de Breakeven e Forecast Comercial completo da operação — um modelo financeiro com 5 componentes integrados: Benchmark de mercado, Premissas, Funil Mensal (12 meses), Cenários por Trimestre e Plano de Ação OKR. O output é um conjunto de tabelas estruturadas, prontas para importar em Google Sheets ou Excel.
+---
+
 # Skill: /ec-dre
 **Objetivo:** Construir o Modelo de Breakeven e Forecast Comercial completo da operação — um modelo financeiro com 5 componentes integrados: Benchmark de mercado, Premissas, Funil Mensal (12 meses), Cenários por Trimestre e Plano de Ação OKR. O output é um conjunto de tabelas estruturadas, prontas para importar em Google Sheets ou Excel.
 

@@ -1,5 +1,31 @@
+---
+name: ec-analise
+description: Consolidar todos os insumos coletados até aqui e produzir o Documento Geral de Análise — um diagnóstico situacional de vendas completo, escrito na perspectiva de um Consultor Sênior de Estratégia de Vendas.
+---
+
 # Skill: /ec-analise
 **Objetivo:** Consolidar todos os insumos coletados até aqui e produzir o Documento Geral de Análise — um diagnóstico situacional de vendas completo, escrito na perspectiva de um Consultor Sênior de Estratégia de Vendas.
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill avalia criteriosamente quais inputs estão disponíveis. Mesmo com todas as entrevistas, podem faltar dados históricos, financeiros ou operacionais. Quando isso ocorrer, execute o benchmark antes de construir o diagnóstico.
+
+**Se algum input crítico estiver ausente — pergunte:**
+1. Qual é o faturamento atual da operação (mesmo que estimativa)?
+2. Quantos leads chegam por mês hoje — mesmo que de forma estimada?
+3. Qual é a taxa de conversão percebida? (Ex: de 10 leads, quantos viram clientes?)
+4. Qual é o ciclo médio de venda — do primeiro contato ao fechamento?
+5. Quais ferramentas a operação usa hoje?
+6. Qual é o maior problema de vendas na visão do gestor?
+
+**Para o que não for respondido ou confirmado, pesquise na internet:**
+- Maturidade média de operações comerciais no segmento e porte do cliente
+- Benchmarks de taxas de conversão, ciclo de venda e ticket médio para o segmento
+- Principais gaps identificados em diagnósticos de operações similares
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

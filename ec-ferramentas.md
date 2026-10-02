@@ -1,3 +1,8 @@
+---
+name: ec-ferramentas
+description: Mapear o arsenal de ferramentas atual do cliente, identificar os gaps operacionais e definir a stack digital completa da nova operação comercial — com recomendação por categoria, prioridade de implementação, SOP de uso e mapa de integração entre as ferramentas.
+---
+
 # Skill: /ec-ferramentas
 **Objetivo:** Mapear o arsenal de ferramentas atual do cliente, identificar os gaps operacionais e definir a stack digital completa da nova operação comercial — com recomendação por categoria, prioridade de implementação, SOP de uso e mapa de integração entre as ferramentas.
 
@@ -29,6 +34,27 @@
 | **Estrutura Organizacional e Pessoas** (output da `/ec-org-pessoas`) | Quem vai usar qual ferramenta — define necessidade de licenças e perfis de acesso |
 | **KPIs e Rituais** (output da `/ec-kpis`) | Quais dados precisam ser capturados pelas ferramentas para alimentar os KPIs definidos |
 | **BPMN** (output da `/ec-bpmn`, se disponível) | Cada etapa do processo precisa de uma ferramenta de suporte — mapear o encaixe |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill verifica o que já está sendo usado antes de recomendar. Se não houver mapeamento da stack atual, execute o protocolo abaixo.
+
+**Se o mapeamento de ferramentas atuais não estiver disponível — pergunte:**
+1. Quais ferramentas a equipe usa hoje — mesmo que sejam WhatsApp, planilha ou papel?
+2. A empresa tem ou já teve CRM? Se sim, qual? Por que parou de usar (se parou)?
+3. Como são enviadas as propostas hoje?
+4. Como são assinados os contratos — papel, PDF, ferramenta digital?
+5. Qual é o budget mensal disponível para ferramentas?
+6. O time tem resistência a adotar tecnologia nova?
+
+**Para o que não for respondido, pesquise na internet:**
+- Stack mínima viável para o segmento e nível de maturidade da operação
+- Ferramentas mais adotadas por operações de mesmo porte no Brasil
+- Custo médio de stack comercial para o estágio inicial no segmento
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

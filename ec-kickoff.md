@@ -1,3 +1,8 @@
+---
+name: ec-kickoff
+description: Gerar uma lista de perguntas estruturadas para a reunião de Kickoff com o cliente de Estruturação Comercial (E.C), com base no Plano de ROI compartilhado pelo departamento comercial.
+---
+
 # Skill: /ec-kickoff
 **Objetivo:** Gerar uma lista de perguntas estruturadas para a reunião de Kickoff com o cliente de Estruturação Comercial (E.C), com base no Plano de ROI compartilhado pelo departamento comercial.
 

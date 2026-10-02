@@ -1,3 +1,8 @@
+---
+name: ec-entrega-gestao
+description: Gerar o HTML completo da Apresentação de Entrega de Gestão e Performance — o documento visual que será apresentado ao cliente na reunião de entrega da Política de Comissionamento e do Forecast Comercial. O output é um arquivo HTML autocontido, com CSS inline, pronto para abrir no browser, converter em PDF ou hospedar no Claude Artifacts / claude.ai.
+---
+
 # Skill: /ec-entrega-gestao
 **Objetivo:** Gerar o HTML completo da Apresentação de Entrega de Gestão e Performance — o documento visual que será apresentado ao cliente na reunião de entrega da Política de Comissionamento e do Forecast Comercial. O output é um arquivo HTML autocontido, com CSS inline, pronto para abrir no browser, converter em PDF ou hospedar no Claude Artifacts / claude.ai.
 
@@ -9,6 +14,23 @@
 |---|---|
 | **Política de Comissionamento** (output da `/ec-comissionamento`) | Conteúdo principal — estrutura de remuneração por cadeira, simulações de ganho, bonificações e regras gerais |
 | **Forecast Comercial** (output da `/ec-forecast-comercial`) | Conteúdo principal — benchmark, premissas, funil mensal, cenários e plano OKR |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill gera o HTML de entrega de Gestão e Performance. Se Comissionamento ou Forecast estiverem incompletos ou baseados em benchmark, a apresentação deve refletir isso.
+
+**Se algum dos entregáveis não estiver completo — pergunte:**
+1. A Política de Comissionamento foi produzida (mesmo que com premissas de benchmark)?
+2. O Forecast Comercial foi produzido (mesmo que com premissas de benchmark)?
+3. Os dados da capa estão confirmados? (nome do cliente, cidade, segmento)
+
+**Para seções sem conteúdo disponível, pesquise na internet:**
+- Como comunicar premissas de benchmark de forma profissional em apresentações executivas
+- Estrutura de apresentação de gestão e performance mais eficaz para o segmento do cliente
+
+> ⚠️ Seções baseadas em benchmark devem ter nota visual na apresentação: **"Premissa a validar com o cliente".**
 
 ---
 

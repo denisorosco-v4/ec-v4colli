@@ -1,3 +1,8 @@
+---
+name: ec-comissionamento
+description: Produzir a Política de Comissionamento oficial da operação comercial — um documento que define como cada cadeira comercial é remunerada variável, com base nas metas de KPI definidas, no modelo de negócio do cliente e nas melhores práticas do mercado pesquisadas. A política deve ser justa, clara, motivadora e alinhada com os resultados que a empresa precisa alcançar.
+---
+
 # Skill: /ec-comissionamento
 **Objetivo:** Produzir a Política de Comissionamento oficial da operação comercial — um documento que define como cada cadeira comercial é remunerada variável, com base nas metas de KPI definidas, no modelo de negócio do cliente e nas melhores práticas do mercado pesquisadas. A política deve ser justa, clara, motivadora e alinhada com os resultados que a empresa precisa alcançar.
 
@@ -20,6 +25,26 @@
 | **Transcrição da entrevista com o top performer** | O que motiva o melhor vendedor, qual é sua percepção sobre remuneração e reconhecimento |
 | **Transcrição da entrevista com o bottom performer** | O que desmotiva, se a política atual é percebida como justa ou injusta |
 | **Documento Geral de Análise** (output da `/ec-analise`) | Gargalos relacionados a pessoas — se desmotivação ou rotatividade aparecem como problema |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill precisa de dados financeiros reais para calcular comissão viável. Se margem, ticket e remuneração atual não estiverem disponíveis, execute o protocolo abaixo.
+
+**Se dados financeiros e de remuneração não estiverem disponíveis — pergunte:**
+1. Como é a remuneração atual do time — existe salário fixo? Comissão? Como funciona hoje?
+2. Qual é a margem de contribuição estimada dos produtos/serviços (% sobre a receita)?
+3. O que motiva o time comercial além do salário?
+4. Qual o máximo que a empresa consegue pagar de variável sem comprometer a operação?
+5. Já houve problemas com comissionamento no passado? O que aconteceu?
+
+**Para o que não for respondido, pesquise na internet:**
+- Benchmarks de comissionamento para o segmento (% sobre receita, fixo+variável, success fee)
+- Modelos de floor, acelerador e ceiling mais adotados para o tipo de venda
+- Remuneração variável média de SDR e Closer no segmento no mercado brasileiro
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

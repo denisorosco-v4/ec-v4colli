@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projeto de Sales Enablement | Avanti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --v4-red: #e50914;
+      --v4-orange: #ff481f;
+      --v4-dark: #280001;
+      --ink: #141414;
+      --ink-soft: #5a5a5a;
+      --line: rgba(20,20,20,.12);
+      --paper: #f5f4f2;
+      --radius: 22px;
+      --hero: radial-gradient(120% 130% at 50% -10%, #ff5a2c 0%, #e50914 30%, #b00610 62%, #280001 100%);
+      --light: radial-gradient(circle at 92% 8%, rgba(229,9,20,.055), transparent 24%), #f5f4f2;
+      --dark: radial-gradient(circle at 78% 15%, rgba(229,9,20,.5), transparent 32%), linear-gradient(145deg, #280001 0%, #130001 100%);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #171313; color: var(--ink); font-family: "IBM Plex Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; }
+    button { font-family: inherit; }
+    #viewport { position: fixed; inset: 0; overflow: hidden; background: radial-gradient(circle at 50% 10%, rgba(229,9,20,.18), transparent 38%), #171313; }
+    #deck { --deck-scale: 1; position: absolute; left: 50%; top: 50%; width: 1600px; height: 900px; overflow: hidden; transform: translate(-50%, -50%) scale(var(--deck-scale)); transform-origin: center; background: var(--paper); box-shadow: 0 40px 120px rgba(0,0,0,.45); }
+    .slide { position: absolute; inset: 0; width: 1600px; height: 900px; padding: 76px 96px 108px; overflow: hidden; opacity: 0; pointer-events: none; transform: translateX(24px); transition: opacity .28s ease, transform .28s ease; background: var(--light); }
+    .slide.active { opacity: 1; pointer-events: auto; transform: translateX(0); }
+    .slide.red { color: #fff; background: var(--hero); }
+    .slide.dark { color: #fff; background: var(--dark); }
+    .slide.white { background: #fff; }
+    .topline { position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--v4-red), var(--v4-orange), transparent 76%); }
+    h1,h2,h3,p { margin-top: 0; }
+    h1 { margin-bottom: 24px; font-size: 88px; line-height: .98; letter-spacing: -.055em; font-weight: 600; }
+    h2 { margin-bottom: 18px; font-size: 60px; line-height: 1.02; letter-spacing: -.045em; font-weight: 600; }
+    h3 { margin-bottom: 10px; font-size: 26px; line-height: 1.1; letter-spacing: -.025em; font-weight: 600; }
+    .lede { max-width: 1030px; color: var(--ink-soft); font-size: 27px; line-height: 1.42; font-weight: 300; }
+    .red .lede, .dark .lede { color: rgba(255,255,255,.74); }
+    .eyebrow { display: inline-flex; align-items: center; min-height: 34px; padding: 7px 15px; border: 1px solid rgba(229,9,20,.18); border-radius: 999px; color: var(--v4-red); background: rgba(229,9,20,.07); font: 700 12px/1 "IBM Plex Mono", monospace; letter-spacing: .09em; text-transform: uppercase; }
+    .red .eyebrow, .dark .eyebrow { color: rgba(255,255,255,.94); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.35); box-shadow: inset 0 0 80px rgba(255,255,255,.12), inset 0 1px 8px rgba(255,255,255,.35); backdrop-filter: blur(14px) saturate(140%); }
+    .accent { color: var(--v4-red); }
+    .red .accent, .dark .accent { color: #ffebc8; }
+    .mono { font-family: "IBM Plex Mono", monospace; }
+    .card { position: relative; padding: 28px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+    .dark .card { color: #fff; background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.22); }
+    .glass { position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.35); border-radius: var(--radius); background: rgba(255,255,255,.06); box-shadow: inset 0 0 150px rgba(255,255,255,.13), inset 0 1px 10px rgba(255,255,255,.38), inset 0 -2px 10px rgba(255,255,255,.22), -5px 5px 20px rgba(0,0,0,.10); backdrop-filter: blur(14px) saturate(140%); }
+    .glass::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(120% 90% at 50% 115%, rgba(255,170,80,.34), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.22), transparent 40%); mix-blend-mode: screen; }
+    .sphere { position: absolute; border: 1px solid rgba(255,255,255,.24); border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.38), rgba(255,255,255,.045) 48%, transparent 66%); box-shadow: inset 0 0 120px rgba(255,255,255,.13), inset 25px 18px 70px rgba(255,160,70,.28); backdrop-filter: blur(3px); animation: float 7s ease-in-out infinite; }
+    .icon { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 2.3; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-box { width: 58px; height: 58px; display: grid; place-items: center; flex: 0 0 auto; border: 1px solid rgba(229,9,20,.18); border-radius: 17px; color: var(--v4-red); background: rgba(229,9,20,.07); }
+    .red .icon-box, .dark .icon-box { color: #fff; border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.08); }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .stack { display: grid; gap: 16px; }
+    .row { display: flex; gap: 18px; align-items: flex-start; }
+    .item { display: flex; gap: 16px; align-items: flex-start; min-height: 82px; padding: 18px; border: 1px solid rgba(20,20,20,.08); border-radius: 18px; background: rgba(255,255,255,.78); font-size: 20px; line-height: 1.22; }
+    .dark .item { color: #fff; background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.18); }
+    .item strong { display: block; margin-bottom: 4px; font-size: 22px; line-height: 1.1; }
+    .big { font-size: 72px; line-height: .95; letter-spacing: -.06em; font-weight: 700; color: var(--v4-red); }
+    .red .big, .dark .big { color: #fff; }
+    .small { color: var(--ink-soft); font-size: 18px; line-height: 1.32; }
+    .red .small, .dark .small { color: rgba(255,255,255,.68); }
+    .timeline { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-top: 46px; }
+    .stage { min-height: 395px; padding: 22px; border-radius: 22px; border: 1px solid var(--line); background: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+    .dark .stage { color: #fff; background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.22); }
+    .red .stage { color: #fff; background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.28); }
+    .stage .num { color: var(--v4-red); font: 700 28px/1 "IBM Plex Mono", monospace; }
+    .red .stage .num, .dark .stage .num { color: #ffebc8; }
+    .stage .date { display: block; margin-top: 6px; color: var(--ink-soft); font: 500 13px/1 "IBM Plex Mono", monospace; letter-spacing: .03em; }
+    .red .stage .date, .dark .stage .date { color: rgba(255,255,255,.62); }
+    .stage p { margin: 0; color: var(--ink-soft); font-size: 17px; line-height: 1.3; }
+    .red .stage p, .dark .stage p { color: rgba(255,255,255,.72); }
+    .gantt { display: grid; grid-template-columns: 208px repeat(16, 1fr); align-items: center; column-gap: 4px; row-gap: 10px; margin-top: 26px; }
+    .gantt-head { font: 600 11px/1 "IBM Plex Mono", monospace; letter-spacing: .02em; color: var(--ink-soft); text-align: center; }
+    .dark .gantt-head, .red .gantt-head { color: rgba(255,255,255,.55); }
+    .gantt-label { font-size: 16px; font-weight: 500; line-height: 1.15; color: var(--ink); }
+    .dark .gantt-label, .red .gantt-label { color: #fff; }
+    .gantt-label span { display: block; margin-top: 2px; font: 500 12px/1 "IBM Plex Mono", monospace; color: var(--ink-soft); }
+    .dark .gantt-label span, .red .gantt-label span { color: rgba(255,255,255,.55); }
+    .gantt-phase { height: 34px; border-radius: 10px; background: var(--hero); color: #fff; display: flex; align-items: center; justify-content: center; padding: 0 10px; font: 600 13px/1.15 "IBM Plex Sans", sans-serif; text-align: center; box-shadow: 0 8px 20px rgba(229,9,20,.28); }
+    .gantt-cadence { height: 20px; border-radius: 8px; background: rgba(229,9,20,.14); border: 1px solid rgba(229,9,20,.24); }
+    .dark .gantt-cadence, .red .gantt-cadence { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.3); }
+    .gantt-cadence.stripe { background-image: repeating-linear-gradient(135deg, rgba(229,9,20,.32) 0 6px, rgba(229,9,20,.1) 6px 12px); }
+    .dark .gantt-cadence.stripe, .red .gantt-cadence.stripe { background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.4) 0 6px, rgba(255,255,255,.14) 6px 12px); }
+    .gantt-milestone { justify-self: center; }
+    .gantt-milestone.diamond { width: 15px; height: 15px; background: var(--v4-red); border-radius: 3px; transform: rotate(45deg); }
+    .dark .gantt-milestone.diamond, .red .gantt-milestone.diamond { background: #fff; }
+    .gantt-milestone.ring { width: 16px; height: 16px; border: 2.5px solid var(--v4-red); border-radius: 50%; }
+    .dark .gantt-milestone.ring, .red .gantt-milestone.ring { border-color: #fff; }
+    .gantt-divider { grid-column: 1 / -1; height: 1px; background: var(--line); }
+    .dark .gantt-divider, .red .gantt-divider { background: rgba(255,255,255,.2); }
+    .gantt-legend { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 22px; }
+    .gantt-legend-item { display: flex; align-items: center; gap: 9px; font-size: 15px; color: var(--ink-soft); }
+    .dark .gantt-legend-item, .red .gantt-legend-item { color: rgba(255,255,255,.72); }
+    .gantt-legend-item .swatch { width: 15px; height: 15px; flex: 0 0 auto; }
+    .split { display: grid; grid-template-columns: .95fr 1.05fr; gap: 30px; align-items: stretch; margin-top: 34px; }
+    .quote { padding: 34px; border-radius: 22px; background: var(--v4-red); color: #fff; font-size: 30px; line-height: 1.22; font-weight: 500; }
+    .cover-content { position: relative; z-index: 3; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+    .brand-lockup img { width: 330px; display: block; object-fit: contain; }
+    .cover-title { max-width: 1180px; margin: 28px 0 0; font-size: 92px; }
+    .deck-footer { position: absolute; z-index: 8; left: 96px; right: 96px; bottom: 32px; height: 48px; display: flex; align-items: center; pointer-events: none; }
+    .deck-footer img { width: 155px; height: 48px; object-fit: contain; object-position: left center; }
+    .navigation { position: absolute; z-index: 20; right: 52px; bottom: 25px; display: flex; align-items: center; gap: 10px; }
+    .nav-btn { width: 48px; height: 48px; display: grid; place-items: center; border: 1px solid rgba(20,20,20,.12); border-radius: 50%; color: var(--ink); background: rgba(255,255,255,.92); box-shadow: 0 10px 30px rgba(0,0,0,.12); cursor: pointer; transition: transform .15s ease, background .15s ease, opacity .15s ease; }
+    .nav-btn:hover { transform: translateY(-2px); background: #fff; }
+    .nav-btn:disabled { opacity: .3; cursor: default; transform: none; }
+    .progress-track { position: absolute; z-index: 21; left: 0; right: 0; bottom: 0; height: 7px; background: rgba(20,20,20,.1); }
+    .progress-fill { width: 5.5%; height: 100%; background: linear-gradient(90deg, var(--v4-red), var(--v4-orange)); box-shadow: 0 0 20px rgba(229,9,20,.35); transition: width .3s ease; }
+    .deck-counter { position: absolute; z-index: 22; right: 176px; bottom: 39px; color: rgba(20,20,20,.52); font: 500 12px/1 "IBM Plex Mono", monospace; letter-spacing: .04em; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M4 4h16v13H8l-4 4V4Z"/><path d="M8 9h8M8 13h5"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><circle cx="18" cy="9" r="3"/><path d="M2 21c0-5 3-8 7-8s7 3 7 8M16 14c4 0 6 2 6 7"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3"/><path d="M2 19h21"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M9 19h2a4 4 0 0 0 4-4v-6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13 2-8 12h7l-1 8 8-12h-7l1-8Z"/></symbol>
+    <symbol id="i-money" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M7 9H5v2M17 15h2v-2"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3-9 5 9 5 9-5-9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/></symbol>
+    <symbol id="i-lightbulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4"/><path d="M8 14c-2-1-3-3-3-6a7 7 0 0 1 14 0c0 3-1 5-3 6l-1 2H9l-1-2Z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 22V4"/><path d="M4 4h14l-3 5 3 5H4"/></symbol>
+  </svg>
+
+  <div id="viewport">
+    <main id="deck" aria-live="polite">
+
+      <section class="slide red" data-title="Sales Enablement Avanti">
+        <div class="sphere" style="width:430px;height:430px;right:-80px;top:-115px;opacity:.55"></div>
+        <div class="sphere" style="width:245px;height:245px;right:285px;top:115px;opacity:.32;animation-delay:-2s"></div>
+        <div class="cover-content">
+          <div class="brand-lockup"><img src="assets/colli-white.png" alt="V4 Company Colli&amp;Co"></div>
+          <div>
+            <span class="eyebrow">Projeto de Sales Enablement · Avanti</span>
+            <h1 class="cover-title">Do diagnóstico<br>à rotina</h1>
+            <p class="lede">16 sprints semanais para transformar o que já funciona no time em padrão coletivo — 01/09 a 18/12/2026.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Contexto do projeto">
+        <div class="topline"></div>
+        <span class="eyebrow">Contexto</span>
+        <h2 style="margin-top:28px;max-width:1180px">Da call de alinhamento ao projeto de sprints</h2>
+        <div class="split">
+          <div class="quote">Luis Fernando pediu carga horária superior para resolver, com prioridade, a conversão do funil — não a aquisição.</div>
+          <div class="card" style="padding:36px">
+            <h3>O que já existe e sustenta este projeto</h3>
+            <div class="stack" style="margin-top:24px">
+              <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-search"></use></svg></div><div>Diagnóstico de aderência com auditoria de 16 chamadas reais</div></div>
+              <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-lightbulb"></use></svg></div><div>Treinamento "Afiando o Machado" já construído para SDRs e Closers</div></div>
+              <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-message"></use></svg></div><div>Call de alinhamento de treinamento (14/08) confirmando as prioridades</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide dark" data-title="A leitura de horas">
+        <span class="eyebrow">Leitura de horas · Luis Fernando</span>
+        <h2 style="margin-top:28px;max-width:1160px">22h por mês, quatro meses, carga 50% mais intensa</h2>
+        <div class="grid-3" style="margin-top:40px">
+          <div class="card"><div class="big">8h</div><h3>Coaching individual</h3><p class="small">8 closers × 1h/mês, formato evolutivo: diagnóstico, orientação, construção.</p></div>
+          <div class="card"><div class="big">4h</div><h3>Marina · diretora comercial</h3><p class="small">Encontro semanal sobre operação e desempenho dos closers.</p></div>
+          <div class="card"><div class="big">2h+2h</div><h3>Eloise e Tamires</h3><p class="small">Quinzenal com atendimento/SDR (Eloise) e back office (Tamires).</p></div>
+        </div>
+        <div class="grid-2" style="margin-top:20px">
+          <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-target"></use></svg></div><div><strong>2h</strong>Alinhamento estratégico mensal com Luis Fernando</div></div>
+          <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-users"></use></svg></div><div><strong>4h</strong>Encontro presencial mensal — revisão de calls e calibragem coletiva</div></div>
+        </div>
+      </section>
+
+      <section class="slide white" data-title="O mapa de dores">
+        <div class="topline"></div>
+        <span class="eyebrow">Dores mapeadas · diagnóstico + auditoria de calls</span>
+        <h2 style="margin-top:28px">Dez pontos que este projeto ataca, um a um</h2>
+        <div class="grid-2" style="margin-top:30px">
+          <div class="stack">
+            <div class="item"><strong>D1 · SDR sem padrão</strong>Descarte precoce, insegurança diante de banco concorrente, ruído de ambiente.</div>
+            <div class="item"><strong>D2 · Colisão de lead</strong>Falta de ownership no CRM — mesmo lead atendido por pessoas diferentes.</div>
+            <div class="item"><strong>D3 · SPIN raso</strong>Diagnóstico preso em Situação, sem chegar em Problema e Implicação.</div>
+            <div class="item"><strong>D4 · Objeção aceita</strong>Banco, taxa e documento encerram a conversa em vez de abrir investigação.</div>
+            <div class="item"><strong>D5 · Taxa mal defendida</strong>5%, 7% ou 10% sem CET nem economia total demonstrada.</div>
+          </div>
+          <div class="stack">
+            <div class="item"><strong>D6 · Fechamento frouxo</strong>"Vamos falando" no lugar de data, hora e critério de avanço.</div>
+            <div class="item"><strong>D7 · Falta material</strong>Sem scorecard, matriz de objeções ou script de abertura padronizado.</div>
+            <div class="item"><strong>D8 · Preparo não protegido</strong>Sem os 30-40 min bloqueados antes de reunião de proposta.</div>
+            <div class="item"><strong>D9 · Liderança mede resultado</strong>Falta rotina de acompanhamento de processo, não só de número final.</div>
+            <div class="item"><strong>D10 · Handoff sem padrão</strong>Closer recebe horário na agenda, não contexto comercial.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide red" data-title="Ritmo semanal">
+        <span class="eyebrow">O modelo · quatro tipos de semana</span>
+        <h2 style="margin-top:28px;max-width:1160px">Um ritmo que se repete todo mês e soma as 22h contratadas</h2>
+        <div class="grid-4" style="margin-top:42px">
+          <div class="glass" style="padding:28px;min-height:300px"><div class="big" style="font-size:44px">A · 4h</div><h3 style="margin-top:18px">Coaching + Marina + Eloise</h3><p class="lede" style="font-size:20px">2 closers em coaching individual, sync semanal com Marina, quinzenal com Eloise.</p></div>
+          <div class="glass" style="padding:28px;min-height:300px"><div class="big" style="font-size:44px">B · 4h</div><h3 style="margin-top:18px">Coaching + Marina + Tamires</h3><p class="lede" style="font-size:20px">2 closers em coaching individual, sync semanal com Marina, quinzenal com Tamires.</p></div>
+          <div class="glass" style="padding:28px;min-height:300px"><div class="big" style="font-size:44px">C · 6h</div><h3 style="margin-top:18px">+ Checkpoint com Luis Fernando</h3><p class="lede" style="font-size:20px">Semana A somada às 2h de alinhamento estratégico mensal.</p></div>
+          <div class="glass" style="padding:28px;min-height:300px"><div class="big" style="font-size:44px">D · 8h</div><h3 style="margin-top:18px">Semana presencial</h3><p class="lede" style="font-size:20px">Coaching + Marina + Tamires + dia presencial com roleplay e calibragem coletiva.</p></div>
+        </div>
+      </section>
+
+      <section class="slide dark" data-title="Quatro fases">
+        <span class="eyebrow">Linha do tempo · 01/09 a 18/12</span>
+        <h2 style="margin-top:28px;max-width:1160px">Quatro fases, cada uma fechando um bloco de dores</h2>
+        <div class="grid-4" style="margin-top:44px">
+          <div class="card" style="min-height:340px"><span class="date mono" style="color:rgba(255,255,255,.62);font-size:14px">01/09 – 28/09</span><h3 style="margin-top:14px">Fase 1</h3><p class="small">Fundação e Padronização — D7, D8, D9, D2, D10</p></div>
+          <div class="card" style="min-height:340px"><span class="date mono" style="color:rgba(255,255,255,.62);font-size:14px">29/09 – 26/10</span><h3 style="margin-top:14px">Fase 2</h3><p class="small">SPIN, Dor Raiz e Handoff — D3, D10, D1</p></div>
+          <div class="card" style="min-height:340px"><span class="date mono" style="color:rgba(255,255,255,.62);font-size:14px">27/10 – 23/11</span><h3 style="margin-top:14px">Fase 3</h3><p class="small">Taxa, Concorrência e Fechamento — D5, D4, D6</p></div>
+          <div class="card" style="min-height:340px"><span class="date mono" style="color:rgba(255,255,255,.62);font-size:14px">24/11 – 18/12</span><h3 style="margin-top:14px">Fase 4</h3><p class="small">Consolidação, Resultados e Encerramento</p></div>
+        </div>
+      </section>
+
+      <section class="slide white" data-title="Cronograma geral">
+        <div class="topline"></div>
+        <span class="eyebrow">Cronograma · visão Gantt</span>
+        <h2 style="margin-top:28px">As etapas do projeto ao longo do tempo</h2>
+        <p class="small" style="margin-top:-6px">Fase 1 01/09–28/09 · Fase 2 29/09–26/10 · Fase 3 27/10–23/11 · Fase 4 24/11–18/12</p>
+
+        <div class="gantt">
+          <div class="gantt-head" style="grid-row:1;grid-column:1;text-align:left">Semana</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:2">S1</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:3">S2</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:4">S3</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:5">S4</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:6">S5</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:7">S6</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:8">S7</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:9">S8</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:10">S9</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:11">S10</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:12">S11</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:13">S12</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:14">S13</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:15">S14</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:16">S15</div>
+          <div class="gantt-head" style="grid-row:1;grid-column:17">S16</div>
+
+          <div class="gantt-label" style="grid-row:2;grid-column:1">Fase 1<span>Fundação</span></div>
+          <div class="gantt-phase" style="grid-row:2;grid-column:2/6">Fundação e Padronização</div>
+          <div class="gantt-label" style="grid-row:3;grid-column:1">Fase 2<span>SPIN · Dor raiz</span></div>
+          <div class="gantt-phase" style="grid-row:3;grid-column:6/10">SPIN, Dor Raiz e Handoff</div>
+          <div class="gantt-label" style="grid-row:4;grid-column:1">Fase 3<span>Taxa · Fechamento</span></div>
+          <div class="gantt-phase" style="grid-row:4;grid-column:10/14">Taxa, Concorrência e Fechamento</div>
+          <div class="gantt-label" style="grid-row:5;grid-column:1">Fase 4<span>Consolidação</span></div>
+          <div class="gantt-phase" style="grid-row:5;grid-column:14/18">Consolidação e Encerramento</div>
+
+          <div class="gantt-divider" style="grid-row:6"></div>
+
+          <div class="gantt-label" style="grid-row:7;grid-column:1">Coaching individual<span>2 closers/semana</span></div>
+          <div class="gantt-cadence" style="grid-row:7;grid-column:2/18"></div>
+          <div class="gantt-label" style="grid-row:8;grid-column:1">Sync · Mariana<span>semanal</span></div>
+          <div class="gantt-cadence" style="grid-row:8;grid-column:2/18"></div>
+          <div class="gantt-label" style="grid-row:9;grid-column:1">Eloise / Tamires<span>quinzenal, alternado</span></div>
+          <div class="gantt-cadence stripe" style="grid-row:9;grid-column:2/18"></div>
+
+          <div class="gantt-divider" style="grid-row:10"></div>
+
+          <div class="gantt-label" style="grid-row:11;grid-column:1">Encontro presencial<span>1×/mês</span></div>
+          <div class="gantt-milestone diamond" style="grid-row:11;grid-column:5"></div>
+          <div class="gantt-milestone diamond" style="grid-row:11;grid-column:9"></div>
+          <div class="gantt-milestone diamond" style="grid-row:11;grid-column:13"></div>
+          <div class="gantt-milestone diamond" style="grid-row:11;grid-column:17"></div>
+          <div class="gantt-label" style="grid-row:12;grid-column:1">Checkpoint · Luis Fernando<span>1×/mês</span></div>
+          <div class="gantt-milestone ring" style="grid-row:12;grid-column:4"></div>
+          <div class="gantt-milestone ring" style="grid-row:12;grid-column:8"></div>
+          <div class="gantt-milestone ring" style="grid-row:12;grid-column:12"></div>
+          <div class="gantt-milestone ring" style="grid-row:12;grid-column:16"></div>
+        </div>
+
+        <div class="gantt-legend">
+          <div class="gantt-legend-item"><span class="swatch" style="border-radius:4px;background:var(--hero)"></span>Fase do projeto</div>
+          <div class="gantt-legend-item"><span class="swatch" style="border-radius:4px;background:rgba(229,9,20,.14);border:1px solid rgba(229,9,20,.3)"></span>Cadência semanal</div>
+          <div class="gantt-legend-item"><span class="swatch" style="border-radius:4px;background-image:repeating-linear-gradient(135deg, rgba(229,9,20,.32) 0 5px, rgba(229,9,20,.1) 5px 10px)"></span>Cadência quinzenal</div>
+          <div class="gantt-legend-item"><span class="swatch" style="background:var(--v4-red);border-radius:3px;transform:rotate(45deg)"></span>Encontro presencial</div>
+          <div class="gantt-legend-item"><span class="swatch" style="border:2.5px solid var(--v4-red);border-radius:50%"></span>Checkpoint com Luis Fernando</div>
+        </div>
+      </section>
+
+      <section class="slide white" data-title="Fase 1">
+        <div class="topline"></div>
+        <span class="eyebrow">Fase 1 · 01/09 a 28/09</span>
+        <h2 style="margin-top:28px">Fundação e Padronização</h2>
+        <div class="timeline" style="grid-template-columns:repeat(4,1fr)">
+          <div class="stage"><span class="num">S1</span><span class="date mono">01–07/09</span><h3 style="margin-top:10px">Kickoff + baseline</h3><p>Kickoff com Fernando/Marina; diagnóstico apresentado; agenda dos 4 meses travada com Marina.</p></div>
+          <div class="stage"><span class="num">S2</span><span class="date mono">08–14/09</span><h3 style="margin-top:10px">Materiais · pacote 1</h3><p>Scorecard SDR, Scorecard Closer e Matriz de Objeções construídos e validados.</p></div>
+          <div class="stage"><span class="num">S3</span><span class="date mono">15–21/09</span><h3 style="margin-top:10px">Materiais · pacote 2</h3><p>Scripts de abertura, checklist de preparo e 2h de alinhamento com Luis Fernando.</p></div>
+          <div class="stage"><span class="num">S4</span><span class="date mono">22–28/09</span><h3 style="margin-top:10px">Rollout + CRM</h3><p>Presencial: reforço do "Afiando o Machado" e regra de ownership de lead com Tamires.</p></div>
+        </div>
+      </section>
+
+      <section class="slide red" data-title="Fase 2">
+        <span class="eyebrow">Fase 2 · 29/09 a 26/10</span>
+        <h2 style="margin-top:28px">SPIN, Dor Raiz e Handoff</h2>
+        <div class="timeline" style="grid-template-columns:repeat(4,1fr)">
+          <div class="stage"><span class="num">S5</span><span class="date mono">29/09–05/10</span><h3 style="margin-top:10px">Implicação no SPIN</h3><p>Coaching focado nas perguntas de implicação; roleplay de handoff com Eloise.</p></div>
+          <div class="stage"><span class="num">S6</span><span class="date mono">06–12/10</span><h3 style="margin-top:10px">Dor raiz</h3><p>Coaching individual; revisão de 3 calls reais com Tamires validando o CRM.</p></div>
+          <div class="stage"><span class="num">S7</span><span class="date mono">13–19/10</span><h3 style="margin-top:10px">SDR não é filtro</h3><p>Checkpoint mês 2 com Luis Fernando; sessão com Eloise sobre gestão do SDR.</p></div>
+          <div class="stage"><span class="num">S8</span><span class="date mono">20–26/10</span><h3 style="margin-top:10px">Roleplay coletivo</h3><p>Presencial: roleplay em trios — banco, documentos, taxa, recurso, cônjuge.</p></div>
+        </div>
+      </section>
+
+      <section class="slide dark" data-title="Fase 3">
+        <span class="eyebrow">Fase 3 · 27/10 a 23/11</span>
+        <h2 style="margin-top:28px">Taxa de Assessoria, Concorrência e Fechamento</h2>
+        <div class="timeline" style="grid-template-columns:repeat(4,1fr)">
+          <div class="stage"><span class="num">S9</span><span class="date mono">27/10–02/11</span><h3 style="margin-top:10px">Defesa da taxa</h3><p>Discurso único de CET e economia total; política de taxa 5-10% formalizada.</p></div>
+          <div class="stage"><span class="num">S10</span><span class="date mono">03–09/11</span><h3 style="margin-top:10px">Calibragem handoff</h3><p>Coaching individual; calibragem do fluxo de leads com Tamires.</p></div>
+          <div class="stage"><span class="num">S11</span><span class="date mono">10–16/11</span><h3 style="margin-top:10px">Concorrência bancária</h3><p>Roleplay Inter/Daycoval/Itaú/Bradesco/Santander; checkpoint mês 3.</p></div>
+          <div class="stage"><span class="num">S12</span><span class="date mono">17–23/11</span><h3 style="margin-top:10px">Fechamento</h3><p>Presencial: treino de fechamento com data/hora/responsável/critério.</p></div>
+        </div>
+      </section>
+
+      <section class="slide white" data-title="Fase 4">
+        <div class="topline"></div>
+        <span class="eyebrow">Fase 4 · 24/11 a 18/12</span>
+        <h2 style="margin-top:28px">Consolidação, Resultados e Encerramento</h2>
+        <div class="timeline" style="grid-template-columns:repeat(4,1fr)">
+          <div class="stage"><span class="num">S13</span><span class="date mono">24–30/11</span><h3 style="margin-top:10px">Objeção como pista</h3><p>Revisão de calls nas 5 objeções críticas do diagnóstico.</p></div>
+          <div class="stage"><span class="num">S14</span><span class="date mono">01–07/12</span><h3 style="margin-top:10px">2ª rodada completa</h3><p>Fecha a 2ª volta de coaching nos 8 closers; comparativo mês 1 vs. mês 4.</p></div>
+          <div class="stage"><span class="num">S15</span><span class="date mono">08–14/12</span><h3 style="margin-top:10px">Resultados do piloto</h3><p>Biblioteca interna de boas práticas; decisão Go/Scale/Stop com Luis Fernando.</p></div>
+          <div class="stage"><span class="num">S16</span><span class="date mono">15–18/12</span><h3 style="margin-top:10px">Encerramento</h3><p>Presencial: calibragem final, Playbook Comercial v2 e plano 2027 — fecha o cronograma de ações do ano.</p></div>
+        </div>
+      </section>
+
+      <section class="slide red" data-title="Indicadores">
+        <span class="eyebrow">Como medimos a evolução</span>
+        <h2 style="margin-top:28px;max-width:1160px">Sete números reportados a cada semana presencial</h2>
+        <div class="grid-4" style="margin-top:40px">
+          <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-search"></use></svg></div><div>% de calls com dor raiz identificada</div></div>
+          <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-message"></use></svg></div><div>% de calls com objeção mapeada antes da proposta</div></div>
+          <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-calendar"></use></svg></div><div>% de reuniões com próximo passo claro</div></div>
+          <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-route"></use></svg></div><div>% de leads SDR entregues com contexto suficiente</div></div>
+          <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-chart"></use></svg></div><div>Conversão reunião → documentação</div></div>
+          <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-check"></use></svg></div><div>Conversão documentação → protocolo</div></div>
+          <div class="item"><div class="icon-box"><svg class="icon"><use href="#i-shield"></use></svg></div><div>% de perda por banco, taxa ou falta de urgência</div></div>
+        </div>
+      </section>
+
+      <section class="slide white" data-title="Materiais">
+        <div class="topline"></div>
+        <span class="eyebrow">Backlog de materiais</span>
+        <h2 style="margin-top:28px">O que este projeto entrega, além do coaching</h2>
+        <div class="grid-4" style="margin-top:36px">
+          <div class="card"><div class="icon-box"><svg class="icon"><use href="#i-chart"></use></svg></div><h3 style="margin-top:20px">Scorecard SDR</h3><p class="small">S2</p></div>
+          <div class="card"><div class="icon-box"><svg class="icon"><use href="#i-chart"></use></svg></div><h3 style="margin-top:20px">Scorecard Closer</h3><p class="small">S2</p></div>
+          <div class="card"><div class="icon-box"><svg class="icon"><use href="#i-shield"></use></svg></div><h3 style="margin-top:20px">Matriz de Objeções</h3><p class="small">S2</p></div>
+          <div class="card"><div class="icon-box"><svg class="icon"><use href="#i-message"></use></svg></div><h3 style="margin-top:20px">Scripts de abertura</h3><p class="small">S3</p></div>
+          <div class="card"><div class="icon-box"><svg class="icon"><use href="#i-check"></use></svg></div><h3 style="margin-top:20px">Checklist de preparo</h3><p class="small">S3</p></div>
+          <div class="card"><div class="icon-box"><svg class="icon"><use href="#i-money"></use></svg></div><h3 style="margin-top:20px">Política de taxa</h3><p class="small">S9</p></div>
+          <div class="card"><div class="icon-box"><svg class="icon"><use href="#i-layers"></use></svg></div><h3 style="margin-top:20px">Playbook Comercial v2</h3><p class="small">S16</p></div>
+          <div class="card"><div class="icon-box"><svg class="icon"><use href="#i-flag"></use></svg></div><h3 style="margin-top:20px">Plano de sustentação 2027</h3><p class="small">S16</p></div>
+        </div>
+      </section>
+
+      <section class="slide dark" data-title="Stakeholders">
+        <span class="eyebrow">Quem participa de cada sprint</span>
+        <h2 style="margin-top:28px">Papel de cada pessoa na rotina</h2>
+        <div class="grid-4" style="margin-top:40px">
+          <div class="card" style="min-height:280px"><div class="icon-box"><svg class="icon"><use href="#i-users"></use></svg></div><h3 style="margin-top:22px">Marina</h3><p class="small">Diretora comercial. Sync semanal sobre operação e desempenho dos closers.</p></div>
+          <div class="card" style="min-height:280px"><div class="icon-box"><svg class="icon"><use href="#i-route"></use></svg></div><h3 style="margin-top:22px">Eloise</h3><p class="small">Assume gestão direta do atendimento/SDR. Quinzenal, foco em handoff e consciência do impacto.</p></div>
+          <div class="card" style="min-height:280px"><div class="icon-box"><svg class="icon"><use href="#i-layers"></use></svg></div><h3 style="margin-top:22px">Tamires</h3><p class="small">Back office. Quinzenal, foco em CRM, ownership de lead e organização documental.</p></div>
+          <div class="card" style="min-height:280px"><div class="icon-box"><svg class="icon"><use href="#i-target"></use></svg></div><h3 style="margin-top:22px">Luis Fernando</h3><p class="small">2h mensais de alinhamento estratégico + checkpoints de fase.</p></div>
+        </div>
+      </section>
+
+      <section class="slide red" data-title="Riscos">
+        <span class="eyebrow">Pontos em aberto</span>
+        <h2 style="margin-top:28px;max-width:1160px">Três pontos para fechar antes ou durante a Fase 1</h2>
+        <div class="grid-3" style="margin-top:44px">
+          <div class="glass" style="padding:30px;min-height:300px"><div class="icon-box"><svg class="icon"><use href="#i-users"></use></svg></div><h3 style="margin-top:26px">Alessandro e Isabelly sem baseline</h3><p class="lede" style="font-size:22px">Os 8 closers já têm nome, mas esses 2 não entraram na auditoria de 16 calls. 1ª sessão de cada um vira diagnóstico.</p></div>
+          <div class="glass" style="padding:30px;min-height:300px"><div class="icon-box"><svg class="icon"><use href="#i-calendar"></use></svg></div><h3 style="margin-top:26px">Contrato ainda em assinatura</h3><p class="lede" style="font-size:22px">Datas exatas dependem do escopo por escrito do Marcelo e da assinatura de Ademilson.</p></div>
+          <div class="glass" style="padding:30px;min-height:300px"><div class="icon-box"><svg class="icon"><use href="#i-shield"></use></svg></div><h3 style="margin-top:26px">Eloise em transição</h3><p class="lede" style="font-size:22px">A Fase 2 depende da Eloise já estar operacional na gestão direta do time de atendimento.</p></div>
+        </div>
+      </section>
+
+      <section class="slide red" data-title="Encerramento">
+        <div class="sphere" style="width:430px;height:430px;right:-70px;bottom:-120px;opacity:.52"></div>
+        <div class="cover-content" style="justify-content:center">
+          <span class="eyebrow">Início · 01/09/2026</span>
+          <h1 style="max-width:1200px;margin-top:34px">O diagnóstico já provou que a Avanti sabe vender bem.</h1>
+          <p class="lede">Este projeto transforma isso em rotina — sprint a sprint, até o fim do ano.</p>
+        </div>
+      </section>
+
+      <div class="deck-footer"><img id="footerLogo" src="assets/colli-red.png" alt=""></div>
+      <div class="deck-counter" id="slideCounter">01 / 16</div>
+      <nav class="navigation" aria-label="Navegação da apresentação">
+        <button class="nav-btn" id="prevBtn" aria-label="Slide anterior" data-testid="prev-slide"><svg class="icon"><use href="#i-arrow-left"></use></svg></button>
+        <button class="nav-btn" id="nextBtn" aria-label="Próximo slide" data-testid="next-slide"><svg class="icon"><use href="#i-arrow-right"></use></svg></button>
+      </nav>
+      <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+    </main>
+  </div>
+
+  <script>
+    const deck = document.getElementById("deck");
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const progressFill = document.getElementById("progressFill");
+    const slideCounter = document.getElementById("slideCounter");
+    const footerLogo = document.getElementById("footerLogo");
+    const requestedSlide = Number(new URLSearchParams(window.location.search).get("slide") || "1");
+    let current = Math.max(0, requestedSlide - 1);
+
+    function fitDeck() {
+      const viewportWidth = window.visualViewport?.width || document.documentElement.clientWidth || window.innerWidth;
+      const viewportHeight = window.visualViewport?.height || document.documentElement.clientHeight || window.innerHeight;
+      const scale = Math.max(.1, Math.min((viewportWidth - 16) / 1600, (viewportHeight - 16) / 900, 1));
+      deck.style.setProperty("--deck-scale", scale);
+    }
+
+    function goTo(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, slideIndex) => slide.classList.toggle("active", slideIndex === current));
+      const number = String(current + 1).padStart(2, "0");
+      const total = String(slides.length).padStart(2, "0");
+      const activeSlide = slides[current];
+      const isDark = activeSlide.classList.contains("red") || activeSlide.classList.contains("dark");
+      slideCounter.textContent = `${number} / ${total}`;
+      slideCounter.style.color = isDark ? "rgba(255,255,255,.58)" : "rgba(20,20,20,.52)";
+      progressFill.style.width = `${((current + 1) / slides.length) * 100}%`;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === slides.length - 1;
+      footerLogo.src = isDark ? "assets/colli-white.png" : "assets/colli-red.png";
+      footerLogo.style.opacity = current === 0 || current === slides.length - 1 ? "0" : "1";
+      document.title = `${number} | ${activeSlide.dataset.title || "Sales Enablement Avanti"}`;
+    }
+
+    prevBtn.addEventListener("click", () => goTo(current - 1));
+    nextBtn.addEventListener("click", () => goTo(current + 1));
+    window.addEventListener("resize", fitDeck);
+    window.visualViewport?.addEventListener("resize", fitDeck);
+    window.addEventListener("keydown", (event) => {
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) { event.preventDefault(); goTo(current + 1); }
+      if (["ArrowLeft", "PageUp"].includes(event.key)) { event.preventDefault(); goTo(current - 1); }
+      if (event.key === "Home") goTo(0);
+      if (event.key === "End") goTo(slides.length - 1);
+    });
+    fitDeck();
+    goTo(current);
+  </script>
+</body>
+</html>

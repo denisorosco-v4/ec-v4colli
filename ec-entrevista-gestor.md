@@ -1,5 +1,33 @@
+---
+name: ec-entrevista-gestor
+description: Analisar a transcrição da reunião de Kickoff e gerar uma lista de perguntas estruturadas para a entrevista com o gestor comercial da empresa.
+---
+
 # Skill: /ec-entrevista-gestor
 **Objetivo:** Analisar a transcrição da reunião de Kickoff e gerar uma lista de perguntas estruturadas para a entrevista com o gestor comercial da empresa.
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill avalia o que está disponível antes de gerar as perguntas. Se a transcrição do Kickoff não estiver disponível, execute o protocolo abaixo antes de prosseguir.
+
+**Se o Kickoff não estiver disponível — pergunte:**
+1. Qual é o segmento e modelo de negócio da empresa?
+2. Como é o processo de vendas hoje, mesmo que informal?
+3. Quais são as metas comerciais para os próximos 12 meses?
+4. Quantas pessoas estão no time comercial e quais são os cargos?
+5. O que trava mais as vendas hoje na sua percepção?
+6. Como você acompanha os resultados do time atualmente?
+7. Já tentou estruturar o processo antes? O que funcionou? O que não funcionou?
+8. O que você espera alcançar com esta Estruturação Comercial?
+
+**Para o que não for respondido, pesquise na internet:**
+- Principais dores e gaps de gestão comercial relatados por gestores no segmento identificado
+- Como líderes de vendas do mesmo setor descrevem os maiores desafios operacionais
+- Modelos de gestão mais eficazes para o porte e tipo de venda
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

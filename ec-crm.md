@@ -1,3 +1,8 @@
+---
+name: ec-crm
+description: Traduzir o Playbook Comercial, o BPMN e os Fluxos de Cadência em configuração concreta do CRM — pipeline, campos personalizados, automações (gatilho → condição → ação), sequências de cadência, alertas de SLA, relatórios e regras de governança. O output é um guia de implementação que uma pessoa consegue seguir com o CRM aberto na tela, sem consultar nenhum outro documento.
+---
+
 # Skill: /ec-crm
 **Objetivo:** Traduzir o Playbook Comercial, o BPMN e os Fluxos de Cadência em configuração concreta do CRM — pipeline, campos personalizados, automações (gatilho → condição → ação), sequências de cadência, alertas de SLA, relatórios e regras de governança. O output é um guia de implementação que uma pessoa consegue seguir com o CRM aberto na tela, sem consultar nenhum outro documento.
 
@@ -15,6 +20,25 @@
 | **Estrutura Organizacional** (`/ec-org-pessoas`) | Perfis de usuário, licenças e permissões de acesso |
 | **Estudo de CRM** (`/ec-stack`) | Qual CRM foi escolhido — permite adaptar nomenclatura e lógica de automação ao sistema real |
 | **Playbook Comercial** (`/ec-playbook-comercial`) | Contexto geral — resolve dúvidas de interpretação entre os entregáveis |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill configura o CRM com base no BPMN, Cadências, KPIs e SLA. Se esses outputs não estiverem disponíveis, execute o protocolo abaixo antes de configurar.
+
+**Se BPMN, Cadências e KPIs não estiverem disponíveis — pergunte:**
+1. Qual CRM foi escolhido?
+2. Quais são as etapas do processo de venda, mesmo que informalmente descritas?
+3. O time que vai usar o CRM já tem familiaridade com a ferramenta?
+4. Quais integrações são absolutamente necessárias no momento da configuração?
+
+**Para o que não for respondido, pesquise na internet:**
+- Configurações de pipeline padrão para o segmento no CRM escolhido
+- Automações de maior impacto para o tipo de venda identificado por usuários do CRM escolhido
+- Casos de uso de empresas do mesmo segmento configurando o CRM escolhido
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

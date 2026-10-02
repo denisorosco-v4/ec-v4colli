@@ -1,3 +1,8 @@
+---
+name: ec-sla
+description: Produzir o Acordo de Nível de Serviço (SLA) da operação comercial — o documento formal que define as responsabilidades, prazos e critérios de qualidade acordados entre marketing e vendas (e entre as etapas do processo comercial), garantindo que nenhum lead seja perdido por falta de alinhamento entre as áreas.
+---
+
 # Skill: /ec-sla
 **Objetivo:** Produzir o Acordo de Nível de Serviço (SLA) da operação comercial — o documento formal que define as responsabilidades, prazos e critérios de qualidade acordados entre marketing e vendas (e entre as etapas do processo comercial), garantindo que nenhum lead seja perdido por falta de alinhamento entre as áreas.
 
@@ -35,6 +40,26 @@ O SLA comercial tem três camadas:
 |---|---|
 | **Plano de ROI** | Canais de aquisição, volume de leads esperado, custo por lead, meta de receita |
 | **Dados de origem de leads** (se disponíveis) | Quais canais geram leads mais qualificados — define critérios de qualidade do SLA de marketing |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill define prazos e condições que precisam ser realistas para a operação. Se os dados de processo e marketing não estiverem disponíveis, execute o protocolo abaixo.
+
+**Se SLAs de processo e condições de chegada de lead não estiverem definidos — pergunte:**
+1. Qual é o tempo máximo aceitável para responder a um lead novo?
+2. Existe operação de marketing estruturada? Quem gera os leads — marketing interno, agência ou o próprio vendedor prospecta?
+3. O que é um "lead qualificado" para esta operação? Qual critério mínimo?
+4. O que acontece com leads que chegam fora do horário comercial?
+5. Qual é o protocolo quando um lead pede mais tempo para decidir?
+
+**Para o que não for respondido, pesquise na internet:**
+- SLAs de resposta padrão por canal e segmento (benchmarks de tempo de primeiro contato por indústria)
+- Definição padrão de MQL e SQL para o modelo de negócio e tipo de venda
+- Condições mínimas de chegada de lead adotadas por operações bem estruturadas no segmento
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

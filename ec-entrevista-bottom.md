@@ -1,5 +1,31 @@
+---
+name: ec-entrevista-bottom
+description: Analisar a transcrição do Kickoff e da entrevista com o gestor comercial para gerar perguntas estruturadas para a entrevista com o vendedor de menor performance (bottom performer), indicado pelo próprio gestor.
+---
+
 # Skill: /ec-entrevista-bottom
 **Objetivo:** Analisar a transcrição do Kickoff e da entrevista com o gestor comercial para gerar perguntas estruturadas para a entrevista com o vendedor de menor performance (bottom performer), indicado pelo próprio gestor.
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill avalia o que está disponível antes de gerar as perguntas. Se as transcrições anteriores não estiverem disponíveis, execute o protocolo abaixo.
+
+**Se Kickoff e entrevista do gestor não estiverem disponíveis — pergunte:**
+1. Como você descreveria sua rotina diária de trabalho em vendas?
+2. Em qual etapa do processo você mais trava?
+3. O que você acha que falta para vender mais?
+4. Como você recebe os leads? O processo é claro para você?
+5. Você tem todas as ferramentas e informações que precisa?
+6. Como é sua relação com o gestor e com o restante do time?
+7. Se pudesse mudar uma coisa no processo hoje, o que seria?
+
+**Para o que não for respondido, pesquise na internet:**
+- Principais bloqueios relatados por vendedores de baixa performance em operações sem processo estruturado no segmento
+- O que trava vendedores no tipo de venda identificado (consultiva, transacional, recorrente)
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

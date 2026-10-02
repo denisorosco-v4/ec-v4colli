@@ -13,6 +13,11 @@
 // cabeçalho estilo breadcrumb (V4 COMPANY · Cliente), linha de autoria vermelha sublinhada,
 // banner de KPIs ("placar executivo") calculado a partir de tabelas quando seguro, e cards
 // escuros para blocos estruturados repetidos (heading + >=2 linhas "**Label:** valor").
+// Extensões (28/09/2026): imagens ![alt](<caminho>) em página A4 paisagem com a imagem original
+// sem alteração; blocos ```mermaid renderizados como imagem via mmdc (fallback: bloco de código;
+// navegador do puppeteer configurável por MMDC_PUPPETEER=<config.json>); código inline `x` em
+// Consolas; escape \* ; wrappers <div>; listas aninhadas (3 níveis, inclusive dentro de citação);
+// listas numeradas com sub-itens e número inicial preservado; marcação limpa em títulos e cards.
 
 const fs = require("fs");
 const path = require("path");
@@ -39,8 +44,10 @@ const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
   BorderStyle, WidthType, ShadingType, Header, Footer, PageNumber,
   AlignmentType, LevelFormat, PageBreak, TabStopType, VerticalAlign, Tab,
-  ExternalHyperlink,
+  ExternalHyperlink, ImageRun, PageOrientation,
 } = requireDocx();
+const { execSync } = require("child_process");
+const crypto = require("crypto");
 
 // ---------- Argumentos ----------
 const SRC = process.argv[2];
@@ -51,20 +58,25 @@ if (!SRC) {
 const OUT = process.argv[3] || SRC.replace(/\.md$/i, ".docx");
 
 const raw = fs.readFileSync(SRC, "utf8");
-const lines = raw.split(/\r?\n/);
+const lines = raw.split(/\r?\n/).filter(l => !/^\s*<\/?div\b[^>]*>\s*$/i.test(l));
+const SRC_DIR = path.dirname(SRC);
+const ESC_STAR = "\uE000";
 
 // ================================================================
 // PARSING INLINE: [texto](url) | **bold** | *italic*
 // ================================================================
 function tokenizeInline(text) {
   const tokens = [];
-  const regex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g;
+  text = (text || "").replace(/\\\*/g, ESC_STAR);
+  const regex = /(`[^`]+`|\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g;
   let lastIndex = 0;
   let m;
   while ((m = regex.exec(text)) !== null) {
     if (m.index > lastIndex) tokens.push({ type: "text", text: text.slice(lastIndex, m.index) });
     const token = m[0];
-    if (token.startsWith("[")) {
+    if (token.startsWith("`")) {
+      tokens.push({ type: "text", text: token.slice(1, -1), code: true });
+    } else if (token.startsWith("[")) {
       const mm = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token);
       tokens.push({ type: "link", text: mm[1], url: mm[2] });
     } else if (token.startsWith("**")) {
@@ -86,16 +98,16 @@ function makeRuns(text, overrides = {}) {
       return new ExternalHyperlink({
         link: t.url,
         children: [new TextRun({
-          text: t.text, font: "Arial", size: overrides.size || 20,
+          text: t.text.split(ESC_STAR).join("*"), font: "Arial", size: overrides.size || 20,
           color: "2E74B5", underline: {},
         })],
       });
     }
     return new TextRun({
-      text: t.text,
+      text: t.text.split(ESC_STAR).join("*"),
       bold: overrides.forceBold || t.bold || false,
       italics: t.italics || false,
-      font: overrides.font || "Arial",
+      font: t.code ? "Consolas" : (overrides.font || "Arial"),
       size: overrides.size || 20,
       color: overrides.color || undefined,
     });
@@ -116,8 +128,35 @@ function paragraph(text, opts = {}) {
   });
 }
 
+function cleanInline(t) {
+  return (t || "").replace(/\\\*/g, ESC_STAR).replace(/\*\*/g, "").replace(/\*([^*]+)\*/g, "$1").replace(/`([^`]+)`/g, "$1").split(ESC_STAR).join("*");
+}
 function heading(text, level) {
-  return new Paragraph({ text, style: `Heading${level}` });
+  return new Paragraph({ text: cleanInline(text), style: `Heading${level}` });
+}
+
+// ---------- Imagens (PNG) e diagramas mermaid ----------
+function pngSize(buf) { return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) }; }
+function fitImage(buf, maxW, maxH, cssScale) {
+  const { w, h } = pngSize(buf);
+  let W = w / cssScale, H = h / cssScale;
+  const k = Math.min(maxW / W, maxH / H, 1e9);
+  W = W * k; H = H * k;
+  return { width: Math.round(W), height: Math.round(H) };
+}
+const MERMAID_DIR = path.join(os.tmpdir(), "ec_docx_mermaid");
+function renderMermaid(code) {
+  fs.mkdirSync(MERMAID_DIR, { recursive: true });
+  const hash = crypto.createHash("md5").update(code).digest("hex").slice(0, 12);
+  const mmd = path.join(MERMAID_DIR, hash + ".mmd"), png = path.join(MERMAID_DIR, hash + ".png");
+  if (!fs.existsSync(png)) {
+    fs.writeFileSync(mmd, code, "utf8");
+    const cfg = path.join(MERMAID_DIR, "config.json");
+    fs.writeFileSync(cfg, JSON.stringify({ theme: "default", themeVariables: { fontFamily: "Arial" } }));
+    const pp = process.env.MMDC_PUPPETEER ? ` -p "${process.env.MMDC_PUPPETEER}"` : "";
+    execSync(`mmdc -i "${mmd}" -o "${png}" -s 2 -b white -c "${cfg}"${pp}`, { stdio: "pipe", shell: true });
+  }
+  return fs.readFileSync(png);
 }
 
 // ================================================================
@@ -464,6 +503,7 @@ while (i < lines.length) {
 
   // Bloco de código / diagrama ASCII ```lang ... ```
   if (trimmed.startsWith("```")) {
+    const lang = trimmed.slice(3).trim().toLowerCase();
     const codeLines = [];
     i++;
     while (i < lines.length && !lines[i].trim().startsWith("```")) {
@@ -471,7 +511,8 @@ while (i < lines.length) {
       i++;
     }
     i++; // pula a linha de fechamento ```
-    blocks.push({ type: "code", lines: codeLines });
+    if (lang === "mermaid") blocks.push({ type: "mermaid", code: codeLines.join("\n") });
+    else blocks.push({ type: "code", lines: codeLines });
     continue;
   }
 
@@ -528,7 +569,7 @@ while (i < lines.length) {
     }
     if (labelPairs.length >= 2) {
       const { badge, title } = extractBadge(text);
-      blocks.push({ type: "cardheading", badge, title });
+      blocks.push({ type: "cardheading", badge: badge ? cleanInline(badge) : badge, title: cleanInline(title) });
       blocks.push({ type: "kvtable", rows: labelPairs });
       i = j;
       continue;
@@ -555,12 +596,16 @@ while (i < lines.length) {
   // Lista ordenada (1. 2. 3. ...) — numId próprio por bloco, ver comentário em orderedListRefs
   if (/^\d+\.\s+/.test(trimmed)) {
     const items = [];
-    while (i < lines.length && /^\d+\.\s+/.test(lines[i].trim())) {
-      items.push(lines[i].trim().replace(/^\d+\.\s+/, ""));
-      i++;
+    const start = parseInt(/^(\d+)\./.exec(trimmed)[1], 10);
+    while (i < lines.length) {
+      const L = lines[i];
+      if (/^\d+\.\s+/.test(L.trim()) && !/^\s{2,}/.test(L)) { items.push({ text: L.trim().replace(/^\d+\.\s+/, "") }); i++; }
+      else if (/^\s{2,}[-*]\s+/.test(L)) { items.push({ text: L.trim().replace(/^[-*]\s+/, ""), sub: true }); i++; }
+      else if (L.trim() === "" && i + 1 < lines.length && (/^\s{2,}[-*]\s+/.test(lines[i + 1]) || /^\d+\.\s+/.test(lines[i + 1]))) { i++; }
+      else break;
     }
     const ref = `numbers-${orderedListRefs.length}`;
-    orderedListRefs.push(ref);
+    orderedListRefs.push({ ref, start });
     blocks.push({ type: "orderedlist", items, ref });
     continue;
   }
@@ -569,17 +614,28 @@ while (i < lines.length) {
   if (/^[-*]\s+/.test(trimmed)) {
     const items = [];
     while (i < lines.length && /^[-*]\s+/.test(lines[i].trim())) {
-      items.push(lines[i].trim().replace(/^[-*]\s+/, ""));
+      const lvl = /^\s{2,}/.test(lines[i]) ? 1 : 0;
+      items.push({ text: lines[i].trim().replace(/^[-*]\s+/, ""), level: lvl });
       i++;
     }
     blocks.push({ type: "list", items });
     continue;
   }
 
+  // Imagem ![alt](caminho) ou ![alt](<caminho com espaços>)
+  const mImg = /^!\[([^\]]*)\]\(<?([^)>]+)>?\)\s*$/.exec(trimmed);
+  if (mImg) {
+    blocks.push({ type: "image", alt: mImg[1], src: path.resolve(SRC_DIR, mImg[2]) });
+    i++;
+    continue;
+  }
+
   // Blockquote ("> ")
   if (trimmed.startsWith(">")) {
     const text = trimmed.replace(/^>\s?/, "");
-    blocks.push({ type: "blockquote", text });
+    if (text.trim() === "") { i++; continue; }
+    if (/^[-*]\s+/.test(text.trim())) blocks.push({ type: "list", items: [{ text: text.trim().replace(/^[-*]\s+/, ""), level: /^\s{2,}/.test(text) ? 2 : 1 }] });
+    else blocks.push({ type: "blockquote", text });
     i++;
     continue;
   }
@@ -631,7 +687,7 @@ if (statResult) {
 const children = [];
 for (const b of blocks) {
   if (b.type === "pagebreak") {
-    children.push(new Paragraph({ children: [new PageBreak()] }));
+    children.push({ __pagebreak: true });
   } else if (b.type === "heading") {
     children.push(heading(b.text, b.level));
   } else if (b.type === "authorship") {
@@ -653,17 +709,40 @@ for (const b of blocks) {
   } else if (b.type === "list") {
     for (const item of b.items) {
       children.push(new Paragraph({
-        children: makeRuns(item),
-        numbering: { reference: "bullets", level: 0 },
+        children: makeRuns(item.text),
+        numbering: { reference: "bullets", level: item.level || 0 },
       }));
     }
   } else if (b.type === "orderedlist") {
     for (const item of b.items) {
       children.push(new Paragraph({
-        children: makeRuns(item),
-        numbering: { reference: b.ref, level: 0 },
+        children: makeRuns(item.text),
+        numbering: item.sub ? { reference: "bullets", level: 1 } : { reference: b.ref, level: 0 },
       }));
     }
+  } else if (b.type === "image") {
+    const buf = fs.readFileSync(b.src);
+    // página paisagem A4: largura útil 14678 DXA (978 px); altura útil descontando cabeçalho, rodapé e legenda
+    const dim = fitImage(buf, 978, 560, 1);
+    children.push({ __landscape: [
+      new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 80 },
+        children: [new ImageRun({ type: "png", data: buf, transformation: dim, altText: { title: b.alt, description: b.alt, name: path.basename(b.src) } })] }),
+      new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 0 },
+        children: [new TextRun({ text: cleanInline(b.alt), italics: true, font: "Arial", size: 18, color: COLOR_GRAY_SECONDARY })] }),
+    ] });
+  } else if (b.type === "mermaid") {
+    let buf = null;
+    try { buf = renderMermaid(b.code); } catch (e) {
+      console.warn("AVISO: mermaid não renderizado (instale @mermaid-js/mermaid-cli); mantido como bloco de código.");
+      b.code.split("\n").forEach(codeLine => children.push(new Paragraph({
+        children: [new TextRun({ text: codeLine.length ? codeLine : " ", font: "Consolas", size: 18 })],
+        spacing: { before: 0, after: 0, line: 240, lineRule: "auto" },
+        shading: { type: ShadingType.CLEAR, fill: "F2F2F2", color: "auto" }, indent: { left: 160 } })));
+      continue;
+    }
+    const dim = fitImage(buf, 650, 820, 2);
+    children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 80, after: 120 },
+      children: [new ImageRun({ type: "png", data: buf, transformation: dim, altText: { title: "Diagrama", description: "Diagrama", name: "diagrama.png" } })] }));
   } else if (b.type === "blockquote") {
     children.push(paragraph(b.text, { indent: { left: 720 } }));
   } else if (b.type === "code") {
@@ -698,6 +777,22 @@ const docHeader = new Header({
   children: [
     new Paragraph({
       tabStops: [{ type: TabStopType.RIGHT, position: 9746 }],
+      border: { bottom: { color: COLOR_RED, space: 0, style: BorderStyle.SINGLE, size: 6 } },
+      spacing: { after: 80 },
+      alignment: AlignmentType.LEFT,
+      children: [
+        new TextRun({ text: headerLeftText, bold: true, font: "Arial", size: 18, color: COLOR_RED }),
+        new TextRun({ children: [new Tab()], font: "Arial", size: 18 }),
+        new TextRun({ text: headerRightText, bold: false, font: "Arial", size: 18, color: COLOR_GRAY_SECONDARY }),
+      ],
+    }),
+  ],
+});
+
+const docHeaderLandscape = new Header({
+  children: [
+    new Paragraph({
+      tabStops: [{ type: TabStopType.RIGHT, position: 14678 }],
       border: { bottom: { color: COLOR_RED, space: 0, style: BorderStyle.SINGLE, size: 6 } },
       spacing: { after: 80 },
       alignment: AlignmentType.LEFT,
@@ -768,33 +863,49 @@ const doc = new Document({
         levels: [{
           level: 0, format: LevelFormat.BULLET, text: "•", alignment: AlignmentType.LEFT,
           style: { paragraph: { indent: { left: 720, hanging: 360 } } },
+        }, {
+          level: 1, format: LevelFormat.BULLET, text: "◦", alignment: AlignmentType.LEFT,
+          style: { paragraph: { indent: { left: 1440, hanging: 360 } } },
+        }, {
+          level: 2, format: LevelFormat.BULLET, text: "▪", alignment: AlignmentType.LEFT,
+          style: { paragraph: { indent: { left: 2160, hanging: 360 } } },
         }],
       },
       // Uma entrada de numbering por bloco de lista numerada do documento (orderedListRefs) —
       // cada uma com numId próprio, para que a numeração reinicie em 1 em cada bloco.
-      ...orderedListRefs.map(ref => ({
+      ...orderedListRefs.map(({ ref, start }) => ({
         reference: ref,
         levels: [{
-          level: 0, format: LevelFormat.DECIMAL, text: "%1.", alignment: AlignmentType.LEFT,
+          level: 0, format: LevelFormat.DECIMAL, text: "%1.", start: start || 1, alignment: AlignmentType.LEFT,
           style: { paragraph: { indent: { left: 720, hanging: 360 } } },
         }],
       })),
     ],
   },
-  sections: [
-    {
-      properties: {
-        page: {
-          size: { width: 11906, height: 16838 },
-          margin: { top: 1080, bottom: 1080, left: 1080, right: 1080, header: 708, footer: 708 },
-        },
-      },
-      headers: { default: docHeader },
-      footers: { default: docFooter },
-      children,
-    },
-  ],
+  sections: buildSections(),
 });
+
+function buildSections() {
+  const PORTRAIT = { page: { size: { width: 11906, height: 16838 },
+    margin: { top: 1080, bottom: 1080, left: 1080, right: 1080, header: 708, footer: 708 } } };
+  const LANDSCAPE = { page: { size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE },
+    margin: { top: 1080, bottom: 1080, left: 1080, right: 1080, header: 708, footer: 708 } } };
+  const out = []; let group = [];
+  const flush = () => {
+    while (group.length && group[0] && group[0].__pagebreak) group.shift();
+    const real = group.map(c => (c && c.__pagebreak) ? new Paragraph({ children: [new PageBreak()] }) : c);
+    if (real.length) out.push({ properties: PORTRAIT, headers: { default: docHeader }, footers: { default: docFooter }, children: real });
+    group = [];
+  };
+  for (const c of children) {
+    if (c && c.__landscape) {
+      flush();
+      out.push({ properties: LANDSCAPE, headers: { default: docHeaderLandscape }, footers: { default: docFooter }, children: c.__landscape });
+    } else group.push(c);
+  }
+  flush();
+  return out;
+}
 
 Packer.toBuffer(doc).then(buffer => {
   fs.writeFileSync(OUT, buffer);

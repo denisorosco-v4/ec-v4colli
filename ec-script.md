@@ -1,64 +1,113 @@
+---
+name: ec-script
+description: produzir os scripts oficiais de vendas, follow-up, handoff e encerramento da operação comercial, conectados a cada etapa do BPMN e a cada toque das cadências definidas em `/ec-cadencia`.
+---
+
 # Skill: /ec-script
-**Objetivo:** Produzir os scripts de vendas e follow-up oficiais da operação comercial. A skill opera em duas fases: primeiro entende o modelo de negócio e define o tom da marca; depois constrói scripts que se encaixam diretamente em cada toque de cada cadência definida na `/ec-cadencia` — formando um sistema unificado de comunicação comercial.
+
+**Objetivo:** produzir os scripts oficiais de vendas, follow-up, handoff e encerramento da operação comercial, conectados a cada etapa do BPMN e a cada toque das cadências definidas em `/ec-cadencia`.
+
+Esta skill é **BPMN-first e Cadência-aware**: primeiro entende o processo etapa a etapa, depois conecta scripts aos momentos reais de comunicação. Nenhum script deve ficar solto, sem etapa, gatilho, responsável e objetivo.
 
 ---
 
 ## Inputs esperados
 
-### Bloco 1 — Modelo de Negócio e Tom da Marca (obrigatório)
-| Documento | O que entrega para os scripts |
-|---|---|
-| **Plano de ROI** | Modelo de negócio, produto/serviço, proposta de valor, ticket médio, perfil do cliente ideal |
-| **Transcrição do Kickoff** | Como o gestor fala sobre a empresa e o produto — vocabulário real, diferenciais declarados, posicionamento |
-| **Transcrição da entrevista com o gestor** | Tom esperado na comunicação, o que funciona hoje, objeções mais comuns na visão da liderança |
-| **Transcrição da entrevista com o top performer** | Como o melhor vendedor fala, aborda e convence — a voz que mais converte nessa operação |
-| **Exemplos de conversas reais com leads** | O vocabulário e o ritmo que o lead já conhece — preservar o que funciona, corrigir o que perde |
-| **Documento Geral de Análise** (output da `/ec-analise`) | Gargalos de comunicação identificados — onde a abordagem atual falha |
+### Bloco 1 — Processo e Cadências
 
-### Bloco 2 — Cadências (obrigatório para a integração)
-| Documento | O que entrega para os scripts |
+| Documento | Uso obrigatório |
 |---|---|
-| **Fluxos de Cadência** (output da `/ec-cadencia`) | **Input central.** Cada toque de cada cadência precisa de um script correspondente. A estrutura de scripts segue exatamente a estrutura de cadências |
+| **BPMN** (`/ec-bpmn`) | Input central para mapear todas as etapas, responsáveis, gatilhos, DoD e motivos de saída |
+| **Fluxos de Cadência** (`/ec-cadencia`) | Input central para scripts de follow-up. Cada toque deve receber um script correspondente |
+| **Playbook Comercial** (`/ec-playbook-comercial`) | Validar tom, regras de linguagem, papéis, etapas e rotinas |
+| **SLA** (`/ec-sla`) | Garantir que os scripts respeitem prazos e protocolos de avanço/encerramento |
 
-### Bloco 3 — Processo e Metodologia
-| Documento | O que entrega para os scripts |
+### Bloco 2 — Voz da Marca e Contexto Comercial
+
+| Documento | Uso |
 |---|---|
-| **BPMN** (output da `/ec-bpmn`) | Em qual etapa do funil cada script é acionado e quem o usa |
-| **Metodologia de qualificação** (definida no BPMN ou nas entrevistas) | Qual framework guia o script de qualificação — NATA, SPIN, BANT ou método próprio |
+| **Plano de ROI** | Modelo de negócio, proposta de valor, ticket, ICP e argumento econômico |
+| **Entrevista com gestor** | Vocabulário real, diferenciais, objeções, pontos de atenção |
+| **Entrevista com top performer** | Linguagem que converte e abordagem prática |
+| **Entrevista com bottom performer** | Falhas de comunicação a corrigir |
+| **Exemplos de conversas reais** | Ritmo, canal e palavras que o lead já reconhece |
 
 ---
 
-## Instruções para o modelo
+## Regra central: cobertura etapa a etapa
 
-### Fase 1 — Entender o Modelo de Negócio e Definir o Tom da Marca
+Antes de escrever scripts, crie uma **Matriz de Scripts por Etapa do BPMN**.
 
-Antes de escrever qualquer script, produza internamente (e apresente ao início do documento) uma síntese de:
+| Etapa BPMN | Responsável | Comunicação necessária? | Tipo de script | Script obrigatório? | Motivo |
+|---|---|---|---|---|---|
+| 1. [Etapa] | [Cargo] | Sim/Não | Abertura / Qualificação / Follow-up / Handoff / Encerramento | Sim/Não | [Justificativa] |
 
-**1. Modelo de negócio:**
-- O que a empresa vende e para quem
-- Como a venda acontece (ciclo curto/longo, consultiva/transacional, B2B/B2C)
-- Qual é o argumento central de valor — por que o cliente compra
-- Qual é a objeção mais recorrente e por que ela existe
+Regras:
 
-**2. Tom da marca:**
-- Formal ou informal?
-- Consultivo ou direto?
-- Técnico ou acessível?
-- Qual é o vocabulário que a empresa usa e evita
-- Como o top performer fala vs. como o bottom fala — o que diferencia
-
-Só após essa síntese estar clara, partir para a escrita dos scripts.
+- Toda etapa do BPMN deve aparecer.
+- Se a etapa for interna e não exigir comunicação com lead, crie pelo menos um **script de handoff interno** quando houver troca de responsável.
+- Se a etapa tiver contato com lead, reunião, envio de documento, proposta, contrato, no-show, silêncio ou encerramento, o script é obrigatório.
+- Toda divergência do BPMN deve ter script: avanço, sem diagnóstico, lead perdido, documentação pendente, proposta recusada, contrato sem assinatura, onboarding.
+- Todo toque da `/ec-cadencia` deve ter um script correspondente com o mesmo ID.
 
 ---
 
-### Fase 2 — Construir os Scripts Integrados às Cadências
+## Síntese obrigatória antes dos scripts
 
-Para cada cadência definida na `/ec-cadencia`, escreva o script correspondente para cada toque. O script deve:
+Antes de escrever qualquer script, apresente:
 
-- Ser coerente com o canal do toque (WhatsApp tem tom diferente de e-mail; ligação tem tom diferente de mensagem escrita)
-- Avançar a conversa de onde o toque anterior parou — sem repetir o que já foi dito
-- Ter um objetivo claro: abrir, qualificar, gerar urgência, quebrar objeção, encerrar
-- Estar pronto para uso direto, com `[marcadores]` apenas onde a personalização é indispensável
+### Modelo de negócio
+
+Resuma:
+
+- o que a empresa vende;
+- para quem vende;
+- como a venda acontece;
+- qual é a tese de valor;
+- qual métrica econômica sustenta a decisão;
+- quais objeções mais prováveis existem.
+
+### Tom da marca
+
+Defina:
+
+- formalidade;
+- nível técnico;
+- ritmo da mensagem;
+- palavras que devem aparecer;
+- palavras proibidas ou a evitar;
+- como adaptar entre WhatsApp, ligação, e-mail e reunião.
+
+### Regras de linguagem
+
+| Usar | Evitar | Por quê |
+|---|---|---|
+| [termo] | [termo] | [racional] |
+
+---
+
+## Tipos de script que a skill deve gerar
+
+A partir do BPMN, avalie e gere scripts para:
+
+1. **Abertura / primeiro contato** — lead novo, indicação, evento, parceria, marketing, carteira.
+2. **Tentativa de conexão** — quando há registro/backlog mas ainda não houve resposta.
+3. **Conexão estabelecida** — resposta positiva, resposta negativa e “não é o momento”.
+4. **Agendamento de qualificação** — convite, confirmação e reagendamento.
+5. **Reunião de qualificação** — abertura, investigação, critérios, diagnóstico sim/não, fechamento da reunião.
+6. **Solicitação de documentação** — pedido inicial, explicação do porquê, NDA, checklist.
+7. **Follow-up de documentação** — toque curto, toque de valor, ligação, última tentativa e reativação.
+8. **Documentação pendente** — quando o time técnico pede complemento.
+9. **Status de diagnóstico** — quando o diagnóstico está em elaboração e o lead precisa ser mantido aquecido.
+10. **Agendamento de apresentação do diagnóstico** — convite, confirmação e lembrete.
+11. **Apresentação do diagnóstico** — abertura, transição para valor financeiro, proposta de serviços.
+12. **Envio de proposta** — mensagem de envio, resumo de valor e CTA.
+13. **Follow-up de proposta** — +7, +15, +30, +60 dias ou conforme cadência.
+14. **Objeções** — preço, já tenho contador, vou falar com sócio/diretor, momento, desconfiança documental, comparação com concorrente.
+15. **Aceite e contrato** — coleta de dados, envio, lembrete de assinatura.
+16. **Proposta recusada / lead perdido** — encerramento elegante e registro de motivo.
+17. **Onboarding pós-fechamento** — boas-vindas, handoff e próximos passos.
+18. **Farmer / carteira** — abordagem de oportunidade, expansão, indicação e BWA Cash quando aplicável.
 
 ---
 
@@ -66,150 +115,160 @@ Para cada cadência definida na `/ec-cadencia`, escreva o script correspondente 
 
 ### Cabeçalho
 
-```
+```markdown
 # Scripts de Vendas e Follow-up — [Nome do Cliente]
 
 **Cliente:** [Nome do cliente]
 **Data:** [Data]
 **Responsável:** Denis Orosco | Consultor de Estratégia de Vendas Sênior
+**Fonte principal:** BPMN + Fluxos de Cadência
 ```
 
 ---
 
 ### Seção 1 — Modelo de Negócio e Tom da Marca
 
-**Modelo de negócio:**
-[Síntese em 5 a 8 linhas: o que a empresa vende, para quem, como a venda acontece, qual é o argumento central de valor e qual é a principal objeção]
+Inclua:
 
-**Tom da marca:**
-[Síntese em 3 a 5 linhas: formal ou informal, consultivo ou direto, vocabulário que usa e evita, como o top performer comunica]
-
-**Palavras e expressões que definem a voz da marca:**
-- [Termo / expressão que deve aparecer nos scripts]
-- [Termo / expressão a evitar — e por quê]
-
----
-
-### Seção 2 — Scripts por Cadência
-
-Para cada cadência documentada na `/ec-cadencia`, construa os scripts de cada toque na seguinte estrutura:
+- modelo de negócio;
+- tese de valor;
+- perfil do lead;
+- ciclo de venda;
+- regras de linguagem;
+- vocabulário obrigatório e proibido.
 
 ---
 
-#### Cadência [N] — [Nome da Cadência]
+### Seção 2 — Matriz de Scripts por Etapa do BPMN
 
-*[Breve descrição do contexto: quando essa cadência é ativada e qual é o objetivo]*
+| Etapa BPMN | Pipeline | Responsável | Momento de comunicação | Script gerado | ID do script |
+|---|---|---|---|---|---|
 
----
+IDs sugeridos:
 
-##### Toque [N] — Dia [X] — [Canal]
-
-**Objetivo deste toque:** [O que deve ser alcançado com essa mensagem]
-
-```
-[Script completo — pronto para uso direto]
-```
-
-> **Instrução de uso:** [Orientação rápida — o que observar, quando adaptar, o que não mudar]
-
----
-
-*(Repetir para todos os toques de todas as cadências definidas na `/ec-cadencia`)*
+- `S01`, `S02`, `S03` para scripts de etapa;
+- `C01-T01`, `C01-T02` para scripts vinculados a cadências;
+- `OBJ-01` para objeções;
+- `HI-01` para handoffs internos.
 
 ---
 
 ### Seção 3 — Scripts de Etapa do Funil
 
-Além dos scripts de cadência (follow-up), produza os scripts das etapas principais do funil — os momentos em que o processo avança, não apenas mantém o lead ativo.
+Repita para cada script de etapa.
 
-#### 3.1 — Primeiro Contato
+```markdown
+## [ID] — [Nome do Script]
 
-**Quando usar:** chegada de um novo lead pelo canal principal
-**Canal:** [Canal principal do cliente]
+**Etapa BPMN:** [número e nome]
+**Responsável:** [cargo]
+**Canal:** [WhatsApp / ligação / e-mail / reunião / CRM interno]
+**Quando usar:** [gatilho exato]
+**Objetivo:** [resultado esperado]
+**Critério de sucesso:** [o que precisa acontecer depois]
 
-```
-[Script]
-```
+### Script
 
-#### 3.2 — Qualificação
-
-**Quando usar:** após o primeiro contato, para verificar elegibilidade
-**Metodologia:** [Framework utilizado]
-
-| CRITÉRIO | OBJETIVO | SCRIPT |
-|---|---|---|
-| [Critério 1] | [O que o vendedor quer descobrir] | "[Pergunta em linguagem natural]" |
-| [Critério 2] | | |
-| [Critério 3] | | |
-| [Critério 4] | | |
-
-#### 3.3 — Solicitação de Informações ou Documentos
-
-**Quando usar:** lead qualificado, avançando para análise ou proposta
-
-```
-[Script]
+```text
+[script pronto para uso]
 ```
 
-#### 3.4 — Proposta e Fechamento
-
-**Quando usar:** após análise, apresentando a solução e chamando para a decisão
-
-```
-[Script — estrutura: dor identificada → solução → resultado esperado → modelo comercial → chamada para ação]
-```
-
-#### 3.5 — Quebra de Objeções
-
-Para cada objeção recorrente identificada nas entrevistas:
-
-**Objeção: [Nome]**
-*Por que o lead diz isso:* [Razão real por trás da objeção]
-
-```
-[Script de resposta — empático, direto, sem pressão]
-```
-
-#### 3.6 — Onboarding Pós-Fechamento
-
-**Quando usar:** imediatamente após o fechamento confirmado
-**Canal:** [Canal principal]
-
-```
-[Script de boas-vindas e próximos passos]
+**Instrução de uso:** [como adaptar sem descaracterizar]
 ```
 
 ---
 
-### Seção 4 — Quadro Comparativo: Atendimento Atual vs. Padrão [Nome do Cliente]
+### Seção 4 — Scripts Integrados às Cadências
 
-| SITUAÇÃO | ATENDIMENTO ATUAL | PADRÃO [NOME DO CLIENTE] |
-|---|---|---|
-| **Primeiro contato** | [O que acontece hoje — baseado nas entrevistas] | [O que deve acontecer com o novo script] |
-| **Qualificação** | [Situação atual] | [Novo padrão] |
-| **Follow-up sem retorno** | [Situação atual] | [Novo padrão — cadência estruturada] |
-| **Objeção de [tipo]** | [Situação atual] | [Novo padrão] |
-| **Pós-fechamento** | [Situação atual] | [Novo padrão] |
+Para cada toque da `/ec-cadencia`, gere o script correspondente.
+
+| Cadência | Toque | Etapa BPMN | Canal | Objetivo | ID do script |
+|---|---|---|---|---|---|
+
+Depois detalhe cada script.
 
 ---
 
-## Regras de qualidade do documento
+### Seção 5 — Roteiros de Reunião
 
-- Nenhum script deve ser escrito antes da síntese de modelo de negócio e tom da marca estar concluída
-- Cada script de cadência deve ser coerente com o toque anterior — a conversa tem memória
-- O canal define o tom: WhatsApp é mais direto e humano; e-mail permite mais estrutura; ligação exige abertura e ritmo diferente
-- Scripts com mais de 5 linhas de texto corrido tendem a não ser lidos no WhatsApp — respeitar o canal
-- Os `[marcadores]` devem ser apenas onde a personalização é indispensável — scripts muito genéricos não convertem, scripts muito longos de personalizar não são usados
-- As objeções respondidas devem ser as reais do cliente — não objeções genéricas de mercado
+Inclua, quando houver no BPMN:
+
+- reunião de qualificação;
+- apresentação de diagnóstico/análise;
+- negociação/proposta;
+- handoff para onboarding.
+
+Cada roteiro deve ter:
+
+1. abertura;
+2. contexto;
+3. perguntas;
+4. transição;
+5. fechamento;
+6. próximos passos;
+7. campos que devem ser atualizados no CRM.
+
+---
+
+### Seção 6 — Scripts de Objeção
+
+| Objeção | Por que o lead diz isso | Resposta recomendada | Próximo passo |
+|---|---|---|---|
+
+Cada objeção deve ter um script curto para WhatsApp e uma versão para ligação/reunião.
+
+---
+
+### Seção 7 — Scripts de Handoff Interno
+
+Obrigatório sempre que o BPMN trocar o dono do card.
+
+| Handoff | De | Para | Quando acontece | Script/Checklist interno |
+|---|---|---|---|---|
+
+Exemplos de handoff:
+
+- SDR -> Time Técnico;
+- Time Técnico -> Apoio Comercial;
+- Apoio Comercial -> Closer;
+- Closer -> Time de Apoio;
+- Closer/Time de Apoio -> Relacionamento;
+- Farmer -> Apoio/Relacionamento, quando aplicável.
+
+---
+
+### Seção 8 — Quadro Comparativo
+
+| Situação | Atendimento atual | Padrão recomendado |
+|---|---|---|
+| Primeiro contato | [se houver dado] | [novo padrão] |
+| Qualificação | [se houver dado] | [novo padrão] |
+| Documentação | [se houver dado] | [novo padrão] |
+| Proposta | [se houver dado] | [novo padrão] |
+| Objeção | [se houver dado] | [novo padrão] |
+| Pós-fechamento | [se houver dado] | [novo padrão] |
+
+---
+
+## Regras de qualidade
+
+- Nenhum script deve ser genérico se o BPMN oferece contexto específico.
+- Todo script deve ter etapa, responsável, canal, gatilho e objetivo.
+- Todo toque da `/ec-cadencia` deve ter script correspondente.
+- Scripts de WhatsApp devem ser curtos, humanos e com uma única chamada para ação.
+- Scripts de e-mail podem ser mais estruturados, mas não devem parecer automação fria.
+- Scripts de ligação/reunião devem ter roteiro, não texto engessado.
+- Scripts internos devem funcionar como checklist de handoff.
+- Se uma informação for premissa de mercado, sinalize: **Premissa de mercado — validar com o cliente.**
+- O vocabulário deve respeitar o Playbook e as regras comerciais do cliente.
 
 ---
 
 ## Como usar esta skill
 
-1. Digite `/ec-script`
-2. Compartilhe os documentos na seguinte ordem:
-   - **Obrigatórios:** Plano de ROI, transcrições das 3 entrevistas, Fluxos de Cadência (`/ec-cadencia`)
-   - **Processo:** BPMN (`/ec-bpmn`), Documento Geral de Análise
-   - **Tom e linguagem:** exemplos de conversas reais com leads
-3. O modelo primeiro sintetiza o modelo de negócio e o tom da marca — e só então constrói os scripts
-4. Receba os scripts integrados às cadências e os scripts de etapa do funil, prontos para uso imediato
+1. Digite `/ec-script`.
+2. Anexe o BPMN.
+3. Anexe os Fluxos de Cadência gerados por `/ec-cadencia`.
+4. Anexe, se houver, Playbook, entrevistas, exemplos de conversa e objeções.
+5. O modelo deve primeiro montar a matriz de scripts por etapa.
+6. Só depois deve escrever scripts de etapa, scripts de cadência, objeções e handoffs.

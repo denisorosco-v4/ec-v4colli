@@ -1,3 +1,8 @@
+---
+name: ec-org-pessoas
+description: Produzir o entregável de Estrutura Organizacional e Pessoas — o documento que define o organograma comercial atual (Fase 1), o organograma de evolução (Fase 2) e a Matriz CHA de cada cadeira da operação comercial.
+---
+
 # Skill: /ec-org-pessoas
 **Objetivo:** Produzir o entregável de Estrutura Organizacional e Pessoas — o documento que define o organograma comercial atual (Fase 1), o organograma de evolução (Fase 2) e a Matriz CHA de cada cadeira da operação comercial.
 
@@ -15,6 +20,27 @@ O usuário irá compartilhar os seguintes documentos:
 6. **Documento Geral de Análise** (output da `/ec-analise`) — se já estiver disponível
 
 Materiais adicionais (organogramas existentes, descrições de cargo, políticas internas, dados de RH) podem ser compartilhados e devem ser absorvidos.
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill avalia o que está disponível. Se não houver dados sobre o time atual, cargos ou plano de crescimento, execute o protocolo abaixo antes de construir o organograma.
+
+**Se informações sobre estrutura atual estiverem ausentes — pergunte:**
+1. Quem vende hoje? Liste nome, cargo e tempo de empresa de cada pessoa do time comercial.
+2. Existe separação entre quem prospecta/qualifica e quem fecha?
+3. Há um gestor dedicado à operação ou o dono acumula essa função?
+4. Qual é o budget disponível para contratar na Fase 1?
+5. Qual seria o critério para escalar o time para a Fase 2?
+6. Algum cargo está vago hoje? Qual perfil está sendo buscado?
+
+**Para o que não for respondido, pesquise na internet:**
+- Estrutura organizacional mínima viável para o porte e segmento do cliente
+- Quando faz sentido separar SDR de Closer: referências de volume de leads, ticket e ciclo
+- Benchmark de remuneração fixa por cargo comercial no segmento (SDR, Closer, Gerente)
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

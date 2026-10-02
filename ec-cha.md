@@ -1,3 +1,8 @@
+---
+name: ec-cha
+description: Para cada cadeira comercial definida na Estrutura Organizacional, pesquisar e definir o CHA ideal — Conhecimentos exigidos, Habilidades exigidas e Atitudes exigidas — com base em melhores práticas de mercado pesquisadas na internet, adaptadas ao segmento, porte e contexto do cliente.
+---
+
 # Skill: /ec-cha
 **Objetivo:** Para cada cadeira comercial definida na Estrutura Organizacional, pesquisar e definir o CHA ideal — Conhecimentos exigidos, Habilidades exigidas e Atitudes exigidas — com base em melhores práticas de mercado pesquisadas na internet, adaptadas ao segmento, porte e contexto do cliente.
 
@@ -11,6 +16,25 @@
 | **Plano de ROI** | Segmento do cliente, porte, tipo de venda (B2B / B2C / complexa / transacional) — contexto para adaptar o CHA ao mercado real |
 | **Transcrição da entrevista com o gestor** | Expectativas e critérios de avaliação da liderança — o que o gestor valoriza em cada papel |
 | **Documento Geral de Análise** (output da `/ec-analise`) | Contexto do negócio e da operação comercial — garante que o CHA seja relevante para a realidade do cliente |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill define o perfil ideal da cadeira, não avalia pessoas. Se não houver entrevistas ou análise disponível, execute o protocolo abaixo.
+
+**Se entrevistas e Documento de Análise não estiverem disponíveis — pergunte:**
+1. Qual é o perfil do vendedor ideal para este negócio na sua visão?
+2. Que habilidades são absolutamente inegociáveis para fechar neste segmento?
+3. Que tipo de comportamento ou atitude desqualifica um candidato imediatamente?
+4. A venda exige conhecimento técnico do produto ou serviço? Em que nível?
+5. O vendedor ideal aqui é mais consultivo ou mais transacional?
+
+**Para o que não for respondido, pesquise na internet:**
+- CHA padrão de mercado para SDR, Closer e Gestor no segmento do cliente
+- O que diferencia top performers de bottom performers no setor em termos de conhecimentos, habilidades e atitudes
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

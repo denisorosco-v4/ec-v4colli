@@ -1,3 +1,8 @@
+---
+name: ec-stack
+description: Produzir um estudo comparativo de seleção de CRM para a operação comercial do cliente — cobrindo CRM Sales e, quando houver operação de marketing estruturada, CRM Marketing. Para cada categoria, apresentar 3 opções avaliadas com base no perfil real do negócio, benchmarks de mercado pesquisados e critérios ponderados. O output orienta a decisão de compra com clareza: qual escolher, por quê, e o que esperar de cada uma.
+---
+
 # Skill: /ec-stack
 **Objetivo:** Produzir um estudo comparativo de seleção de CRM para a operação comercial do cliente — cobrindo CRM Sales e, quando houver operação de marketing estruturada, CRM Marketing. Para cada categoria, apresentar 3 opções avaliadas com base no perfil real do negócio, benchmarks de mercado pesquisados e critérios ponderados. O output orienta a decisão de compra com clareza: qual escolher, por quê, e o que esperar de cada uma.
 
@@ -15,6 +20,26 @@
 | **KPIs e Rituais** (`/ec-kpis`) | Indicadores que precisam ser rastreados no CRM — define quais relatórios são obrigatórios |
 | **Estrutura Organizacional** (`/ec-org-pessoas`) | Quantas licenças, quais perfis de acesso, se há SDR e Closer separados |
 | **Ferramentas Táticas** (`/ec-ferramentas`, se disponível) | O que já foi recomendado — evitar contradição com a stack existente |
+
+---
+
+## Dados Prioritários e Benchmark Automático
+
+> A skill precisa do perfil do negócio para recomendar o CRM certo. Se os dados de processo, canal e budget não estiverem disponíveis, execute o protocolo abaixo.
+
+**Se perfil de negócio, canal e budget não estiverem disponíveis — pergunte:**
+1. Qual é o budget mensal disponível para ferramentas de CRM?
+2. O time já tem experiência com algum CRM? Se sim, qual e qual foi a experiência?
+3. Qual é o canal principal de comunicação com os leads?
+4. Existe operação de marketing estruturada que precise de automação de e-mail e nutrição?
+5. Quantas licenças de CRM serão necessárias imediatamente?
+
+**Para o que não for respondido, pesquise na internet:**
+- CRMs mais adotados para o segmento e porte no mercado brasileiro (G2, Capterra, comunidades de vendas)
+- Custo médio de stack para o tamanho e maturidade da operação
+- Integrações mais críticas para o canal principal identificado
+
+> ⚠️ Toda informação construída via benchmark deve ser sinalizada no documento com: **Premissa de mercado — validar com o cliente.**
 
 ---
 

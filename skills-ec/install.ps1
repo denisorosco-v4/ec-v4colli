@@ -50,3 +50,5 @@ Write-Host ""
 Write-Host "Lembrete de pre-requisitos:" -ForegroundColor Cyan
 Write-Host "  - /ec-exportar-docx precisa de Node.js + 'npm install -g docx'"
 Write-Host "  - /ec-forecast-comercial precisa de Node.js + 'npm install -g exceljs'"
+Write-Host "  - /v4-slides precisa de Node.js + 'npm install -g pptxgenjs'"
+Write-Host "  - /ec-visual-style precisa do Pandoc; /ec-poc e /ec-visual-style tem caminhos locais a ajustar"
